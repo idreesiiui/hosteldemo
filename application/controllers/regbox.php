@@ -354,7 +354,7 @@ class Regbox extends CI_Controller
 			
 			$stregexist = $this->Signup_model->checkreg($regno);
 			
-			$gender = $stregexist[0]->GENDER;
+			$gender = ($stregexist[0]->GENDER);
 	
 			//$streg = $this->Signup_model->checkstdreg($regno);
 		
@@ -393,10 +393,25 @@ class Regbox extends CI_Controller
 			}
 				
 			$batchcode = $this->Signup_model->getbatchcode($regno);
+
+			// $ptitle = explode(" ", $batchcode[0]->PROGRAME);
+
+			// if($ptitle[0] == 'Master'){
+			// 	$progamm = 'MBA';
+			// } else if($ptitle[0] == 'Bachelor'){
+			// 	$progamm = 'BBA';
+			// }
+
+			// $progamm = $ptitle[0];	
 			
 			$protitle = $batchcode[0]->PROTITTLE;
 
-			$batch = str_replace(' ', '', $batchcode[0]->BATCHNAME);
+			$findbatch = explode("/",$regno);			
+
+			$btch = $findbatch[sizeof($findbatch) - 1];
+
+			$batch = str_replace(' ', '', ($batchcode[0]->BATCHNAME) ?? $btch);
+			
 
 			$nationality = $batchcode[0]->NATIONALITY; 
 
@@ -408,7 +423,7 @@ class Regbox extends CI_Controller
 
 				//echo $protitle;	
 
-
+//var_dump($semdetail); exit();
 				
 			if(strpos($protitle, 'BS') !== false || strpos($protitle, 'LLB') !== false || strpos($protitle, 'BA') !== false || strpos($protitle, 'MA') !== false || strpos($protitle, 'MSC') !== false || strpos($protitle, 'MS') !== false || strpos($protitle, 'PHD') !== false )
 			{
@@ -437,7 +452,7 @@ class Regbox extends CI_Controller
 				
 			}
 
-				// echo $batch;
+				// var_dump($batch);
 
 				//  echo "</br>==========bs==============</br>";
 
@@ -464,15 +479,15 @@ class Regbox extends CI_Controller
 				//  echo "</br>============phd============</br>";
 				// var_dump($semdetail);
 
-				//exit();
+				// exit();
 				
 			if (($protitle == 'BS' || $protitle == 'LLB' || $protitle == 'BA') && (strpos($batch, $bs1) !== false || strpos($batch, $bs2) !== false || strpos($batch, $bs3) !== false  || strpos($batch, $bs4) !== false || strpos($batch, $bs5) !== false || strpos($batch, $bs6) !== false || strpos($batch, $bs7) !== false  || strpos($batch, $bs8) !== false )) 
 			{
 				$countbs = substr_count($seminfo[0]->BATCHNAME, 'B');
 
-				var_dump($semdetail);
+				//var_dump($semdetail);
 
-				//exit();
+				///exit();
 				
 				if($countbs > 0)
 				{
@@ -1859,7 +1874,7 @@ function getmalestudentSeatInter()
 		$this->form_validation->set_rules('regno','regno','trim|required|max_length[128]|xss_clean');
 		$this->form_validation->set_rules('city','city','trim|required|max_length[128]|xss_clean');
 		$this->form_validation->set_rules('dept','dept','trim|required|max_length[128]|xss_clean');
-		$this->form_validation->set_rules('faculty','faculty','trim|required|max_length[128]|xss_clean');
+		//$this->form_validation->set_rules('faculty','faculty','trim|required|max_length[128]|xss_clean');
 		$this->form_validation->set_rules('programe','programe','trim|required|max_length[128]|xss_clean');
 		$this->form_validation->set_rules('fname','fname','trim|required|max_length[128]|xss_clean');
   		$this->form_validation->set_rules('fnumber','fnumber','required|min_length[11]|xss_clean');
@@ -1867,7 +1882,7 @@ function getmalestudentSeatInter()
 		$this->form_validation->set_rules('nationality','nationality','trim|required|max_length[128]|xss_clean');
 		$this->form_validation->set_rules('cnic','cnic','trim|required|min_length[4]|xss_clean');
 		$this->form_validation->set_rules('emargancycnic','visitor CNIC','trim|required|max_length[13]|xss_clean');
-		$this->form_validation->set_rules('cgpa','cgpa','trim|required|max_length[128]|xss_clean');
+		//$this->form_validation->set_rules('cgpa','cgpa','trim|required|max_length[128]|xss_clean');
 		$this->form_validation->set_rules('paddress','paddress','trim|required|max_length[128]|xss_clean');
 		$this->form_validation->set_rules('district','district','trim|required|max_length[128]|xss_clean');
 		$this->form_validation->set_rules('province','province','trim|required|max_length[128]|xss_clean');
@@ -1882,7 +1897,7 @@ function getmalestudentSeatInter()
         if($this->form_validation->run() == FALSE)
         {
             $regno = $this->input->post('regno');
-        //var_dump(validation_errors()); exit();
+        var_dump(validation_errors()); exit();
 				
 			$this->session->set_flashdata('error', 'Please fill all required fields and update your Student Profile in Student Info (Al-Jamia) from Admission Section.');
 			$encoderegno = base64_encode($regno);

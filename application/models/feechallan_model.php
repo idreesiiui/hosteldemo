@@ -2822,10 +2822,22 @@ class Feechallan_model extends CI_Model
 	
 	function GetstudinfoAljamia($regno)
     {
-		return $this->db->select('REGNO, NATIONALITY, PROTITTLE')
+		$result = $this->db->select('REGNO, NATIONALITY, PROTITTLE')
 						->where('REGNO', $regno)
 						->get('TBL_HSTUDENTS')
-						->row();		
+						->row();
+
+		if(empty($result)){
+				$otherdb = $this->load->database('otherdb', TRUE);
+				$otherdb->select('*');
+				$otherdb->from('students');
+				//$otherdb->where('IS_ACTIVE', 1);
+				$otherdb->where('REGNO', $regno);				
+				$query = $otherdb->get();
+				$result = $query->result();
+			}      
+		//var_dump($result); exit();
+			return $result;  		
 	}
 	
 	function GetHistoryBatch($studregno, $structsemcode)
@@ -3072,10 +3084,22 @@ class Feechallan_model extends CI_Model
 	
 	function getFeestudInfoAljamia($regno)
     {
-		return $this->db->select('REGNO, STUDENTNAME, FATHERNAME, PROGRAME, CNIC, NATIONALITY')
+		$result = $this->db->select('REGNO, STUDENTNAME, FATHERNAME, PROGRAME, CNIC, NATIONALITY')
 					->where('REGNO', $regno)
 					->get('TBL_HSTUDENTS')
-					->row();		
+					->row();	
+
+		if(empty($result)){
+				$otherdb = $this->load->database('otherdb', TRUE);
+				$otherdb->select('*');
+				$otherdb->from('students');
+				//$otherdb->where('IS_ACTIVE', 1);
+				$otherdb->where('REGNO', $regno);				
+				$query = $otherdb->get();
+				$result = $query->row();
+			}      
+		//var_dump($result); exit();
+			return $result;	
 	}
 	
 	function NewFeeStructureHeadListById($feestructureid)
@@ -3113,9 +3137,21 @@ class Feechallan_model extends CI_Model
 	
 	function GetGenderByRegno($studregno)
     {
-        return $this->db->select('REGNO, GENDER')
+        $result = $this->db->select('REGNO, GENDER')
 			        ->where('REGNO', $studregno)
 			        ->get('TBL_HSTUDENTS')
 			        ->row();
+
+		if(empty($result)){
+				$otherdb = $this->load->database('otherdb', TRUE);
+				$otherdb->select('*');
+				$otherdb->from('students');
+				//$otherdb->where('IS_ACTIVE', 1);
+				$otherdb->where('REGNO', $studregno);				
+				$query = $otherdb->get();
+				$result = $query->row();
+			}      
+		//var_dump($result); exit();
+			return $result;
     }
 }  
