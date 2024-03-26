@@ -183,7 +183,7 @@ class Femalereg extends CI_Controller
 		
 	}
     
-function appformfemale($regno = NULL)
+	function appformfemale($regno = NULL)
 	{
 		
 	   if($this->input->post('regno') != TRUE)
