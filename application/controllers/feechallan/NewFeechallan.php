@@ -625,9 +625,7 @@ class NewFeechallan extends BaseController
 		elseif($strucFeetype == 'Allotment')
 		{
 
-
-			   
-			if($regno = ''){
+			if($studpostregno == ''){
 
 				$this->session->set_flashdata('error', 'Enter Valid Regno');
 									
@@ -635,12 +633,19 @@ class NewFeechallan extends BaseController
 			}
 			else
 			{
+				// var_dump($gender);
+				// var_dump($studpostregno);
+
+				//  exit();
 					   
 				$currentsemcode = $this->feechallan_model->CurrentSemester($gender);
 							
 				$currentsemcode = $currentsemcode->semcode;
 							
 				$regnoinfos = $this->feechallan_model->GetStudAllotmentregnoInfo($studpostregno, $gender);
+
+
+				
 
 
 				
@@ -675,6 +680,8 @@ class NewFeechallan extends BaseController
 							$studentaljamia = $this->feechallan_model->GetstudinfoAljamia($regno);
 
 
+
+
 								
 							$studregno = $studentaljamia->REGNO ?? $studentaljamia[0]->REGNO;
 										
@@ -684,7 +691,7 @@ class NewFeechallan extends BaseController
 
 							
 									
-							if($studprogram == 'BS' || $studprogram == 'LLB' || $studprogram == 'MA' || $studprogram == 'MSC' || $studprogram == 'BA')
+							if($studprogram == 'BSC' || $studprogram == 'BS' || $studprogram == 'LLB' || $studprogram == 'MA' || $studprogram == 'MSC' || $studprogram == 'BA')
 							{
 								$studprogram = 'BS';
 												

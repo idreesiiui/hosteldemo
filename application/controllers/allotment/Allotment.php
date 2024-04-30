@@ -245,6 +245,8 @@ class Allotment extends BaseController
         	$userId = $this->vendorId;
 			
 			$gender = $this->gender;
+
+			$data['gender'] = $this->gender;
 			
 			$data['hosteldetail'] = $this->allotment_model->getHostelInfo($gender);
 			

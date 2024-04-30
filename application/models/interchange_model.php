@@ -92,6 +92,20 @@ class Interchange_model extends CI_Model
 			return false;
 		}
 	}
+
+	function StudentChangeRecordExisted($regno,$semcode)
+	{
+		$otherdb = $this->load->database('otherdb', TRUE);
+		$otherdb->where('REGNO',$regno);
+		$otherdb->where('SEMCODE',$semcode);
+		return $otherdb->get('tbl_seatchangemale')->result_array();
+		// if ($query->num_rows() > 0){
+		// 	return true;
+		// }
+		// else{
+		// 	return false;
+		// }
+	}
     
 		function mail_exists($email)
 	{
@@ -675,11 +689,18 @@ class Interchange_model extends CI_Model
     {
 		$otherdb = $this->load->database('otherdb', TRUE);
 		$otherdb->where('TBL_HOSTEL.HOSTELID',$hostelId);
-		$otherdb->where('TBL_HOSTEL.HOSTELID !=',13);
-		$otherdb->where('TBL_HOSTEL.HOSTELID !=',16);
-		$otherdb->where('TBL_ROOM.ROOMTYPE !=','2S');
-		$otherdb->where('TBL_ROOM.ROOMTYPE !=','2s');
-		$otherdb->where('TBL_ROOM.CAPTUREBY',null);
+		//$otherdb->where('TBL_HOSTEL.HOSTELID !=',13);
+		//$otherdb->where('TBL_HOSTEL.HOSTELID !=',16);
+		$otherdb->where('TBL_ROOM.ROOMTYPE !=','TUTOR ROOM');
+		$otherdb->where('TBL_ROOM.ROOMTYPE !=','WASHROOM');
+		$otherdb->where('TBL_ROOM.ROOMTYPE !=','DOOR');
+		$otherdb->where('TBL_ROOM.ROOMTYPE !=','NO NUMBER');
+		$otherdb->where('TBL_ROOM.ROOMTYPE !=','AD OFFICE');
+		$otherdb->where('TBL_ROOM.ROOMTYPE !=','office');
+		$otherdb->where('TBL_ROOM.ROOMTYPE !=','ST (Office');
+		$otherdb->where('TBL_ROOM.ROOMTYPE !=','STARES');
+		$otherdb->where('TBL_ROOM.ROOMTYPE !=','KITCHEN');
+		//$otherdb->where('TBL_ROOM.CAPTUREBY',null);
 		$otherdb->where('TBL_HOSTEL.GENDER',$gender);
 		$otherdb->select('TBL_ROOM.*,TBL_HOSTEL.GENDER,TBL_HOSTEL.HOSTEL_NO');
         $otherdb->from('TBL_ROOM');
@@ -696,10 +717,13 @@ class Interchange_model extends CI_Model
 		$otherdb = $this->load->database('otherdb', TRUE);
         
 		$otherdb->where('TBL_HOSTEL.HOSTELID',$hostelId);
+		//$otherdb->where('TBL_HOSTEL.HOSTELID !=',13);
+		//$otherdb->where('TBL_HOSTEL.HOSTELID !=',16);
+		//$otherdb->where('TBL_SEAT.SEATDESC !=','Cubical');
 		$otherdb->where('TBL_ROOM.ROOMID',$roomId);
 		$otherdb->where('TBL_SEAT.GENDER',$gender);
 		$otherdb->where('TBL_SEAT.OCCUPIED',0);
-		$otherdb->where('TBL_SEAT.CAPTUREBY',null);
+		//$otherdb->where('TBL_SEAT.CAPTUREBY',null);
 		$otherdb->select('TBL_SEAT.*');
         $otherdb->from('TBL_SEAT');
 		$otherdb->join('TBL_HOSTEL', 'TBL_HOSTEL.HOSTELID = TBL_SEAT.HOSTELID','INNER');

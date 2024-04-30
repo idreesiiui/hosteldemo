@@ -167,8 +167,18 @@ class Signup_model extends CI_Model
 		$this->db->where('REGNO', $regno);
 		$this->db->where('GENDER', 'F');
         $query = $this->db->get();
-        $result = $query->result();        
-        return $result;
+        $result = $query->result(); 
+        if(empty($result)){
+                $otherdb = $this->load->database('otherdb', TRUE);
+                $otherdb->select('*');
+                $otherdb->from('students');
+                $otherdb->where('GENDER', 'Female');
+                $otherdb->where('REGNO', $regno);                
+                $query = $otherdb->get();
+                $result = $query->result();            
+        }         
+        return $result;     
+        
     }
 	
 	function getstudentgenderbyMale($regno)
@@ -411,7 +421,7 @@ class Signup_model extends CI_Model
 
 			if(empty($result)){
 				$otherdb = $this->load->database('otherdb', TRUE);
-				$otherdb->select('PROTITTLE,PROGRAME,NATIONALITY,COUNTRY');
+				$otherdb->select('PROTITTLE,PROGRAME AS BATCHNAME,NATIONALITY,COUNTRY');
 				$otherdb->from('students');
 				//$otherdb->where('IS_ACTIVE', 1);
 				$otherdb->where('REGNO', $regno);				

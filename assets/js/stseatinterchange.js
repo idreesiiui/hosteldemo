@@ -181,6 +181,9 @@ $(document).ready(function() {
                     }
 
 					 $("#vhostelname").val(hosteldesc);
+					 $("#hostel_desc").val(hosteldesc);
+
+					 console.log(hosteldesc);
 				}
 				else 
 				    {

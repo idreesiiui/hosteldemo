@@ -1014,7 +1014,7 @@ Link for Allotment Slip.</h3>';
 		
 		if(empty($semestercode[0]->SEATCHANGESTATUS) && $semestercode[0]->SEATCHANGESTATUS != 1)
 		  {
-			  echo '<i style="color:red;font-size:20px;font-family:calibri ;">Sorry! Hostel Seat Change/Interchange Application not yet open or close for this semester. Please Contact Provost Hostel Office. </i><br><br> You will be redirect to previous page shortly !';
+			  echo '<i style="color:red;font-size:20px;font-family:calibri ;">Sorry! Hostel Seat Change/Interchange Application yet open or close for this semester. Please Contact Provost Hostel Office. </i><br><br> You will be redirect to previous page shortly !';
 							
 							
 			header("refresh:10;url=http://usis.iiu.edu.pk:64453/dashboard");
@@ -1081,11 +1081,157 @@ Link for Allotment Slip.</h3>';
 					$regno = $reg[0]->REGNO; $semcode = $reg[0]->SEMCODE;
 					
 					$recordExist = $this->interchange_model->StudentChangeMExisted($regno,$semcode);
+
+
+					$stuAlreadExist = $this->interchange_model->StudentChangeRecordExisted($regno,$semcode);
+
+					//var_dump($stuAlreadExist); 
+
+					//get p_hostel name
+
+					$where = array(
+						'HOSTEL_NO'=>$stuAlreadExist[0]['CHOSTEL'],
+						'GENDER' => 'Male'
+					);
+
+					$pre_hname = $this->common_model->getWhere('*','tbl_hostel',$where);
+
+					$pre_hname[0]['HOSTELDESC'];
+
+					
+
+					//get n_hostel name
+
+					$where = array(
+						'HOSTELID'=>$stuAlreadExist[0]['HOSTEL1'],
+						'GENDER' => 'Male'
+					);
+
+					$new_hname = $this->common_model->getWhere('*','tbl_hostel',$where);
+
+					$new_hname[0]['HOSTELDESC'];
+
+
+
+// ---------------------------------------------------------
+
+					//get p_room number
+					//get n_room number
+
+
+					$where = array(
+						'ROOMDESC'=>$stuAlreadExist[0]['CROOM'],
+						'GENDER' => 'Male'
+					);
+
+					$pre_room = $this->common_model->getWhere('*','tbl_room',$where);
+
+					
+
+					//var_dump($pre_room[0]['ROOMDESC']);
+
+					
+
+					//get n_hostel name
+
+					$where = array(
+						'ROOMID'=>$stuAlreadExist[0]['ROOM1'],
+						'GENDER' => 'Male'
+					);
+
+					$new_room = $this->common_model->getWhere('*','tbl_room',$where);
+
+					$new_room[0]['ROOMDESC'];
+
+// ---------------------------------------------------------
+
+					$where = array(
+						'SEATID'=>$stuAlreadExist[0]['CSEAT'],
+						'GENDER' => 'Male'
+					);
+
+					$pre_seat = $this->common_model->getWhere('*','tbl_seat',$where);
+
+					
+
+					//var_dump($pre_seat[0]['SEAT']);
+
+					
+
+					//get n_hostel name
+
+					$where = array(
+						'SEATID'=>$stuAlreadExist[0]['SEAT1'],
+						'GENDER' => 'Male'
+					);
+
+					$new_seat = $this->common_model->getWhere('*','tbl_seat',$where);
+
+					$new_seat[0]['SEATDESC'];
+
+
+
+					//get p_seat name
+					//var_dump($new_seat[0]['SEAT']); exit();
+
+
+					
+					//get n_seat name
+
+
+
+					//var_dump($stuAlreadExist[0]['MCHANGE_ID']); exit();
+
+
+
 					
 					if($recordExist == TRUE)
 					{
-						echo '<i style="color:green;font-size:20px;font-family:calibri ;">Wow! request for Seat Change Already Submitted Successfully for more info contact Hostel Admin.</i><br><br> You will be redirect to previous page shortly !';
-						header( "refresh:10;url=http://usis.iiu.edu.pk:64453/dashboard" );
+
+						$stdinfo = array(
+							'FORMID'=>$stuAlreadExist[0]['MCHANGE_ID'], 
+							'REGNO'=>$stuAlreadExist[0]['REGNO'], 
+							'SEMCODE'=>$stuAlreadExist[0]['SEMCODE'],
+							'STUDENTNAME'=>$stuAlreadExist[0]['STUDENTNAME'], 
+							'CHOSTEL'=>$stuAlreadExist[0]['CHOSTEL'], 
+							'chostelname'=>$pre_hname[0]['HOSTELDESC'], 
+							'currenthostelname'=>$pre_hname[0]['HOSTELDESC'], 
+							'CROOM'=>$stuAlreadExist[0]['CROOM'], 
+							'CSEAT'=>$stuAlreadExist[0]['CSEAT'], 
+							'HOSTEL1'=>$stuAlreadExist[0]['HOSTEL1'], 
+							'hostel_desc'=>$new_hname[0]['HOSTELDESC'], 
+							'room_desc'=>$new_room[0]['ROOMDESC'], 
+							'GENDER'=>$stuAlreadExist[0]['GENDER'], 
+							'SEAT1'=>$new_seat[0]['SEAT'], 
+							'CREATEDDTM'=>$stuAlreadExist[0]['CREATEDDTM']
+						);
+
+
+						$this->load->library('pdf');
+
+					 	$data['oraclepic'] = $this->common_model->PictureOracle($stuAlreadExist[0]['REGNO']);
+
+
+					 	//var_dump($data['oraclepic']);
+						//var_dump($stdinfo); exit();
+					
+						$data['studInfo'] = $stdinfo;
+					
+						//$data['studTotalCredit'] = $studTotalCredit;
+						
+						//$this->pdf->load_view('reallotment/renewalform', $data);
+						$this->pdf->load_view('seatchange/seatchangeform', $data);
+				  
+					    $this->pdf->render();
+						
+					    $data['Attachment'] = FALSE;
+						
+					    //$this->pdf->stream("seat_change_form.pdf", $data);
+					    $this->pdf->stream("reallotment/ReAllotment/renewal.pdf", $data);
+
+
+						//echo '<i style="color:green;font-size:20px;font-family:calibri ;">Wow! request for Seat Change Already Submitted Successfully for more info contact Hostel Admin.</i><br><br> You will be redirect to previous page shortly !';
+						//header( "refresh:10;url=http://usis.iiu.edu.pk:64453/dashboard" );
 			 
 			//exit to prevent the rest of the script from executing
 			exit;
@@ -1121,6 +1267,8 @@ Link for Allotment Slip.</h3>';
 				$name = $this->input->post('name');
 				$swapname = $this->input->post('swapname');
 				$chostel_no = $this->input->post('chostel');
+				$chostelname = $this->input->post('chostelname');
+				$currenthostelname = $this->input->post('currenthostelname');
 				$croomdesc = $this->input->post('croomno');
 				$cseat = $this->input->post('cseat');
 				$newhostel_no = $this->input->post('newhostelno');
@@ -1128,6 +1276,7 @@ Link for Allotment Slip.</h3>';
 				$newseat = $this->input->post('newseat');
 				$swapregno = $this->input->post('swapregno');
 				$swaphostel_no = $this->input->post('swaphostelno');
+				$hostel_desc = $this->input->post('hostel_desc');
 				$swaproomdesc = $this->input->post('swaproomno');
 				$swapseat = $this->input->post('swapseat');
 				date_default_timezone_set('Asia/Karachi');
@@ -1164,29 +1313,77 @@ Link for Allotment Slip.</h3>';
 							'CREATEDDTM'=>$dateTime
 						);
 
-
-						
 						$studChangeInserteds = $this->interchange_model->InsertStudentChangeRec($NewStudChangeInfo, $gender);
+
+					$result = $this->interchange_model->getRoomInfobyId($newhostel_no, $newroomdesc, $gender);
+
+					
+
+					$where = array('SEATID' => $newseat);
+
+					$seat_detail = $this->common_model->getWhere('*','tbl_seat',$where);
+
+					//var_dump($seat_detail); exit();
+
+						$stdinfo = array(
+							'FORMID'=>$studChangeInserteds, 
+							'REGNO'=>$regno, 
+							'SEMCODE'=>$semcode,
+							'STUDENTNAME'=>$name, 
+							'CHOSTEL'=>$chostel_no, 
+							'chostelname'=>$chostelname, 
+							'currenthostelname'=>$currenthostelname, 
+							'CROOM'=>$croomdesc, 
+							'CSEAT'=>$cseat, 
+							'HOSTEL1'=>$newhostel_no, 
+							'hostel_desc'=>$hostel_desc, 
+							'room_desc'=>$result[0]->ROOMDESC, 
+							'GENDER'=>$gender, 
+							'SEAT1'=>$seat_detail[0]['SEAT'], 
+							'CREATEDDTM'=>$dateTime
+						);
+
+						//var_dump($stdinfo); exit();
+						
+						
 
 						$seatInfo = array(
 							'CAPTUREBY' => $regno
 						);
 
-						$this->seat_model->editSeat($seatInfo,$newseat);
+						//$this->seat_model->editSeat($seatInfo,$newseat);
 
 						
-						if($studChangeInserteds == TRUE)
-					  {
+					if(TRUE)
+					 {
+
+					 	$this->load->library('pdf');
+
+					 	$data['oraclepic'] = $this->common_model->PictureOracle($regno);
+					
+						$data['studInfo'] = $stdinfo;
+					
+						//$data['studTotalCredit'] = $studTotalCredit;
+						
+						//$this->pdf->load_view('reallotment/renewalform', $data);
+						$this->pdf->load_view('seatchange/seatchangeform', $data);
+				  
+					    $this->pdf->render();
+						
+					    $data['Attachment'] = FALSE;
+						
+					    //$this->pdf->stream("seat_change_form.pdf", $data);
+					    $this->pdf->stream("reallotment/ReAllotment/renewal.pdf", $data);
+
 						  
-						echo '<i style="color:green;font-size:20px;font-family:calibri; padding: 20px;
-    background-color: #f44336;color: white;opacity: 1;transition: opacity 0.6s;margin-bottom: 15px;background-color: #4CAF50;">Wow! request for Seat Change Submitted Successfully.</i><br><br> You will be redirect to previous page shortly !';
-    header( "refresh:10;url=http://usis.iiu.edu.pk:64453/dashboard" );
-					  }
-					  else
-					   {
+						//echo '<i style="color:green;font-size:20px;font-family:calibri; padding: 20px;background-color: #f44336;color: white;opacity: 1;transition: opacity 0.6s;margin-bottom: 15px;background-color: #4CAF50;">Wow! request for Seat Change Submitted Successfully.</i><br><br> You will be redirect to previous page shortly !';
+    					//header( "refresh:10;url=http://usis.iiu.edu.pk:64453/dashboard" );
+					}
+					else
+					{
 						  
 						$this->session->set_flashdata('error', 'Fail! please try again');
-                redirect('seatswap/Interchange/Fseatchange');
+                		redirect('seatswap/Interchange/Fseatchange');
 					       
 					    }
 					}

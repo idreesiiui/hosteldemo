@@ -74,13 +74,13 @@
                             <div class="col-md-6 form-group">
                                 <label for="exampleFormControlSelect2">Father Name</label>
                                 <input type="text" class="form-control required" id="fname" name="fname" readonly value="<?php echo $StudentInfo[0]->FATHERNAME ?>">
-                                <input type="hidden" class="form-control required" id="faculty" name="faculty" maxlength="128" readonly value="<?php echo $StudentInfo[0]->FACULTY ?>">
+                                <input type="hidden" class="form-control required" id="faculty" name="faculty" maxlength="128" readonly value="<?php// echo $StudentInfo[0]->FACULTY ?? ''; ?>"> 
                                 <input type="hidden" class="form-control required" id="programe" name="programe" maxlength="128" readonly value="<?php echo $StudentInfo[0]->PROGRAME ?>">
                                 <input type="hidden" class="form-control required" id="batchname" name="batchname" maxlength="128" readonly value="<?php echo $StudentInfo[0]->BATCHNAME ?>">
                 			</div>
                             <!--<div class="col-md-6 form-group">-->
                                 <!--<label for="exampleFormControlSelect2">CGPA</label>-->
-                                <input type="hidden" class="form-control required" id="cgpa" name="cgpa" maxlength="12" value="<?php echo number_format($StudentInfo[0]->CGPA, 1, '.', '') ?>" readonly>
+                                <!-- <input type="hidden" class="form-control required" id="cgpa" name="cgpa" maxlength="12" value="<?php //echo number_format($StudentInfo[0]->CGPA, 1, '.', '') ?? ''; ?>" readonly> -->
                             <!--</div>-->
                              <!--<div class="col-md-6 form-group">
                                 <label for="dept">Department</label>-->
@@ -129,7 +129,7 @@
                             <!--</div>-->
                             <!--<div class="col-md-6 form-group">
                                 <label for="role">Faculty</label>-->
-                                <input type="hidden" class="form-control required" id="faculty" name="faculty" maxlength="128" readonly value="<?php echo $StudentInfo[0]->FACULTY ?>"> 
+                                <input type="hidden" class="form-control required" id="faculty" name="faculty" maxlength="128" readonly value="<?php echo $StudentInfo[0]->FACULTY ?? ''; ?>"> 
                            <!-- </div>-->
                            
                             <?php 

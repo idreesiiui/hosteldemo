@@ -215,8 +215,27 @@
                                 </div>
                                  <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="occupy">Faculty</label>
-                                         <input type="text" class="form-control required" id="faculty"  name="faculty" maxlength="120" readonly>
+                                        <label for="occupy">Faculty<?php //var_dump($gender); ?></label>
+                                        <?php if($gender === 'Female'){ ?>   
+                                        <select class="form-control valid" name="faculty" id="faculty" required="" aria-required="true" aria-invalid="false">
+                                            <option value="">Select Faculty</option>
+                                            <option value="Arabic">Arabic</option>      
+                                            <option value="Basic & Applied Sciences">Basic &amp; Applied Sciences</option>
+                                            <option value="Computing and Information Technology">Computing and Information Technology</option>
+                                            <option value="Education">Education</option>
+                                            <option value="Economics">Economics</option>
+                                            <option value="Engineering & Technology">Engineering &amp; Technology</option>
+                                            <option value="International Institute of Islamic Economics">International Institute of Islamic Economics</option>
+                                            <option value="Islamic Studies (Usuluddin)">Islamic Studies (Usuluddin)</option>
+                                            <option value="Languages & Literature">Languages &amp; Literature</option>
+                                            <option value="Management Sciences">Management Sciences</option>
+                                            <option value="Shariah & Law">Shariah and Law</option>
+                                            <option value="School of Economics">School of Economics</option>
+                                            <option value="Social Sciences">Social Sciences</option>
+                                        </select>
+                                        <?php } else { ?>
+                                            <input type="text" class="form-control required" id="faculty"  name="faculty" maxlength="120" readonly>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                  <div class="col-md-2">

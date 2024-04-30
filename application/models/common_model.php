@@ -15,6 +15,19 @@ class common_model extends CI_Model
 					->result();
     }
 
+    function getWhere($select,$table,$where)
+	{
+		return $this->otherdb->select( $select )
+						->where( $where )
+						->get($table)						
+						->result_array();
+	}
+
+	function getAll($table)
+	{
+		return $this->otherdb->get($table)->result_array();
+	}
+
     function GetActiveSemester($gender)
     {
 		return $this->otherdb->where('GENDER',$gender)
