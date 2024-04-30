@@ -85,7 +85,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="dob">Current Hostel Name <span class="grey-11">(Your Existed Hostel) </span></label>
-                                         <input type="text" class="form-control required" id="chostelname" name="chostelname" readonly value="<?php echo $StudentInfo[0]->HOSTELDESC ?>">
+                                         <input type="text" class="form-control required" id="chostelname" name="currenthostelname" readonly value="<?php echo $StudentInfo[0]->HOSTELDESC ?>">
                                       </div>
                                 </div>
                                 <div class="col-md-3">
@@ -155,8 +155,9 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="dob">Current Hostel Name <span class="grey-11">(Your Existed Hostel) </span></label>
+                                        <label for="dob">New Hostel Name <span class="grey-11">(Your Existed Hostel) </span></label>
                                          <input type="text" class="form-control required" id="vhostelname" name="chostelname" readonly value="Select Hostel">
+                                         <input type="hidden" id="hostel_desc" name="hostel_desc">
                                          <input type="hidden" class="form-control required" id="hostelid" name="hostelid" readonly value="<?php echo $StudentInfo[0]->HOSTELID ?>">
                                       </div>
                                 </div>

@@ -128,7 +128,16 @@ class Signup_model extends CI_Model
         $this->db->from('TBL_HSTUDENTS');
 		$this->db->where('REGNO', $regno);
         $query = $this->db->get();
-        $result = $query->result();        
+        $result = $query->result();
+        if(empty($result)){
+                $otherdb = $this->load->database('otherdb', TRUE);
+                $otherdb->select('*');
+                $otherdb->from('students');
+                //$otherdb->where('IS_ACTIVE', 1);
+                $otherdb->where('REGNO', $regno);               
+                $query = $otherdb->get();
+                $result = $query->result();            
+        }         
         return $result;
     }
 	
@@ -138,7 +147,16 @@ class Signup_model extends CI_Model
         $this->db->from('STUDENTPICTURELR');
 		$this->db->where('REGNO', $regno);
         $query = $this->db->get();
-        $result = $query->result();        
+        $result = $query->result();
+        if(empty($result)){
+                $otherdb = $this->load->database('otherdb', TRUE);
+                $otherdb->select('*');
+                $otherdb->from('students');
+                //$otherdb->where('IS_ACTIVE', 1);
+                $otherdb->where('REGNO', $regno);                
+                $query = $otherdb->get();
+                $result = $query->result();            
+        }         
         return $result;
     }
 	
@@ -149,8 +167,18 @@ class Signup_model extends CI_Model
 		$this->db->where('REGNO', $regno);
 		$this->db->where('GENDER', 'F');
         $query = $this->db->get();
-        $result = $query->result();        
-        return $result;
+        $result = $query->result(); 
+        if(empty($result)){
+                $otherdb = $this->load->database('otherdb', TRUE);
+                $otherdb->select('*');
+                $otherdb->from('students');
+                $otherdb->where('GENDER', 'Female');
+                $otherdb->where('REGNO', $regno);                
+                $query = $otherdb->get();
+                $result = $query->result();            
+        }         
+        return $result;     
+        
     }
 	
 	function getstudentgenderbyMale($regno)
@@ -160,7 +188,17 @@ class Signup_model extends CI_Model
 		$this->db->where('REGNO', $regno);
 		$this->db->where('GENDER', 'M');
         $query = $this->db->get();
-        $result = $query->result();        
+        $result = $query->result(); 
+        if(empty($result)){
+            $otherdb = $this->load->database('otherdb', TRUE);
+            $otherdb->select('*');
+            $otherdb->from('students');
+            //$otherdb->where('IS_ACTIVE', 1);
+            $otherdb->where('GENDER', 'Male');
+            $query = $otherdb->get();
+            $result = $query->result();
+            
+        }        
         return $result;
     }
 	
@@ -227,6 +265,31 @@ class Signup_model extends CI_Model
 			return $result;
 			
 		}
+
+		function checkstdreg($regno)
+	    {
+			$this->db->select('REGNO,GENDER');
+			$this->db->from('TBL_HSTUDENTS');
+			$this->db->where('REGNO', $regno);
+			$query = $this->db->get();
+			$result = $query->result();
+
+			if(empty($result)){
+
+				$otherdb = $this->load->database('otherdb', TRUE);
+				$otherdb->select('*');
+				$otherdb->from('students');
+				//$otherdb->where('IS_ACTIVE', 1);
+				//$otherdb->where('gender', 'Male');
+				$otherdb->where('REGNO', $regno);
+				$query = $otherdb->get();
+				$result = $query->result();
+			
+			}        
+			//var_dump($result); exit();
+			return $result;
+			
+		}
 		
 		function checkreg($regno)
 	    {
@@ -234,7 +297,21 @@ class Signup_model extends CI_Model
 			$this->db->from('TBL_HSTUDENTS');
 			$this->db->where('REGNO', $regno);
 			$query = $this->db->get();
-			$result = $query->result();        
+			$result = $query->result();
+
+			if(empty($result)){
+
+				$otherdb = $this->load->database('otherdb', TRUE);
+				$otherdb->select('*');
+				$otherdb->from('students');
+				//$otherdb->where('IS_ACTIVE', 1);
+				//$otherdb->where('gender', 'Male');
+				$otherdb->where('REGNO', $regno);
+				$query = $otherdb->get();
+				$result = $query->result();
+			
+			}        
+			//var_dump($result); exit();
 			return $result;
 			
 		}
@@ -337,11 +414,21 @@ class Signup_model extends CI_Model
 		
 		function getbatchcode($regno)
 		{
-			return $this->db->select('BATCHNAME,PROTITTLE,NATIONALITY,COUNTRY')
+			$result = $this->db->select('BATCHNAME,PROTITTLE,NATIONALITY,COUNTRY')
 							->where('REGNO', $regno)
 							->get('TBL_HSTUDENTS')
-							->result();        
-			
+							->result();  
+
+			if(empty($result)){
+				$otherdb = $this->load->database('otherdb', TRUE);
+				$otherdb->select('PROTITTLE,PROGRAME AS BATCHNAME,NATIONALITY,COUNTRY');
+				$otherdb->from('students');
+				//$otherdb->where('IS_ACTIVE', 1);
+				$otherdb->where('REGNO', $regno);				
+				$query = $otherdb->get();
+				$result = $query->result();
+			}      
+			return $result;
 		}
 	
 	/**

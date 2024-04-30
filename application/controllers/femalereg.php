@@ -183,7 +183,7 @@ class Femalereg extends CI_Controller
 		
 	}
     
-function appformfemale($regno = NULL)
+	function appformfemale($regno = NULL)
 	{
 		
 	   if($this->input->post('regno') != TRUE)
@@ -200,12 +200,16 @@ function appformfemale($regno = NULL)
 			
 			
 			$stregexist = $this->Signup_model->checkreg($regno);
+
+
 			
 			$gender = $stregexist[0]->GENDER;
 	
 		//$streg = $this->Signup_model->checkstdreg($regno);
 
 			$isInBlackList = $this->Signup_model->CheckBlacklist($regno);
+
+
 
 			if($isInBlackList == true)
 			{
@@ -230,9 +234,9 @@ function appformfemale($regno = NULL)
 				$streg = $this->Signup_model->checkMstdreg($regno,$gender);
 			}
 			
-		    $applystatus = $streg[0]->APPLYSTATUS;
+		   // $applystatus = $streg[0]->APPLYSTATUS;
 
-			if($streg == true && $applystatus == 1)
+			if($streg == true && $streg[0]->APPLYSTATUS == 1)
 			{
 				$trackerid = $streg[0]->STUDENTID;
 				
@@ -252,9 +256,12 @@ function appformfemale($regno = NULL)
 				
 				$protitle = $batchcode[0]->PROTITTLE;
 
-				//echo $protitle; exit(); 
+				//echo $protitle; 
 
+				//exit();
 				$batch = str_replace(' ', '', $batchcode[0]->BATCHNAME); 
+
+				//var_dump($batch); exit();
 
 				$nationality = $batchcode[0]->NATIONALITY; 
 
@@ -266,27 +273,93 @@ function appformfemale($regno = NULL)
 				
 				if(strpos($protitle, 'BS') !== false || strpos($protitle, 'LLB') !== false || strpos($protitle, 'BA') !== false || strpos($protitle, 'MA') !== false || strpos($protitle, 'MSC') !== false || strpos($protitle, 'MS') !== false || strpos($protitle, 'PHD') !== false )
 				{
-				$bs1 = ltrim($semdetail[0], $semdetail[0][0]);
-				$bs2 = ltrim($semdetail[1], $semdetail[1][0]);
-				$bs3 = ltrim($semdetail[2], $semdetail[2][0]);
-				$bs4 = ltrim($semdetail[3], $semdetail[3][0]);
-				$bs5 = ltrim($semdetail[4], $semdetail[4][0]);
-				$bs6 = ltrim($semdetail[5], $semdetail[5][0]);
-				$bs7 = ltrim($semdetail[6], $semdetail[6][0]);
-				$bs8 = ltrim($semdetail[7], $semdetail[7][0]); 
-				$ma1 = substr($semdetail[8], 2);
-				$ma2 = substr($semdetail[9], 2);
-				$ma3 = substr($semdetail[10], 2);
-				$ma4 = substr($semdetail[11], 2);
-				$ms1 = ltrim($semdetail[12], $semdetail[12][0]);
-				$ms2 = ltrim($semdetail[13], $semdetail[13][0]);
-				$ms3 = ltrim($semdetail[14], $semdetail[14][0]);
-				$ms4 = ltrim($semdetail[15], $semdetail[15][0]);
+				$bs1 = str_replace('SPRING','Spring',ltrim($semdetail[0], $semdetail[0][0]));
+				$bs2 = str_replace('SPRING','Spring',ltrim($semdetail[1], $semdetail[1][0]));
+				$bs3 = str_replace('SPRING','Spring',ltrim($semdetail[2], $semdetail[2][0]));
+				$bs4 = str_replace('SPRING','Spring',ltrim($semdetail[3], $semdetail[3][0]));
+				$bs5 = str_replace('SPRING','Spring',ltrim($semdetail[4], $semdetail[4][0]));
+				$bs6 = str_replace('SPRING','Spring',ltrim($semdetail[5], $semdetail[5][0]));
+				$bs7 = str_replace('SPRING','Spring',ltrim($semdetail[6], $semdetail[6][0]));
+				$bs8 = str_replace('SPRING','Spring',ltrim($semdetail[7], $semdetail[7][0])); 
+				$ma1 = str_replace('SPRING','Spring',substr($semdetail[8], 2));
+				$ma2 = str_replace('SPRING','Spring',substr($semdetail[9], 2));
+				$ma3 = str_replace('SPRING','Spring',substr($semdetail[10], 2));
+				$ma4 = str_replace('SPRING','Spring',substr($semdetail[11], 2));
+				$ms1 = str_replace('SPRING','Spring',ltrim($semdetail[12], $semdetail[12][0]));
+				$ms2 = str_replace('SPRING','Spring',ltrim($semdetail[13], $semdetail[13][0]));
+				$ms3 = str_replace('SPRING','Spring',ltrim($semdetail[14], $semdetail[14][0]));
+				$ms4 = str_replace('SPRING','Spring',ltrim($semdetail[15], $semdetail[15][0]));
+				$ps1 = str_replace('SPRING','Spring',ltrim($semdetail[16], $semdetail[16][0]));
+				$ps2 = str_replace('SPRING','Spring',ltrim($semdetail[17], $semdetail[17][0]));
+				$ps3 = str_replace('SPRING','Spring',ltrim($semdetail[18], $semdetail[18][0]));
+				$ps4 = str_replace('SPRING','Spring',ltrim($semdetail[19], $semdetail[19][0]));
+				$ps5 = str_replace('SPRING','Spring',ltrim($semdetail[20], $semdetail[20][0]));
+				$ps6 = str_replace('SPRING','Spring',ltrim($semdetail[21], $semdetail[21][0]));
+
+				// var_dump($protitle);
+				// var_dump($batch);
+				// var_dump($bs1);
+				// var_dump($bs2);
+				// var_dump($bs3);
+				// var_dump($bs4);
+				// var_dump($bs5);
+				// var_dump($bs6);
+				// var_dump($bs7);
+				// var_dump($bs8);
+				// var_dump($ma1);
+				// var_dump($ma2);
+				// var_dump($ma3);
+				// var_dump($ma4);
+				// var_dump($ms1);
+				// var_dump($ms2);
+				// var_dump($ms3);
+				// var_dump($ms4);
+				// var_dump($ps1);
+				// var_dump($ps2);
+				// var_dump($ps3);
+				// var_dump($ps4);
+				// var_dump($ps5);
+				// var_dump($ps6);
+
+
+
+
+				// var_dump(strpos($batch,$bs1));
+				// var_dump(strpos($batch,$bs2));
+				// var_dump(strpos($batch,$bs3));
+				// var_dump(strpos($batch,$bs4));
+				// var_dump(strpos($batch,$bs5));
+				// var_dump(strpos($batch,$bs6));
+				// var_dump(strpos($batch,$bs7));
+				// var_dump(strpos($batch,$bs8));
+				// var_dump(strpos($batch,$ma1));
+				// var_dump(strpos($batch,$ma2));
+				// var_dump(strpos($batch,$ma3));
+				// var_dump(strpos($batch,$ma4));
+				// var_dump(strpos($batch,$ms1));
+				// var_dump(strpos($batch,$ms2));
+				// var_dump(strpos($batch,$ms3));
+				// var_dump(strpos($batch,$ms4));
+				// var_dump(strpos($batch,$ps1));
+				// var_dump(strpos($batch,$ps2));
+				// var_dump(strpos($batch,$ps3));
+				// var_dump(strpos($batch,$ps4));
+				// var_dump(strpos($batch,$ps5));
+				// var_dump(strpos($batch,$ps6));
+
+				//var_dump(strpos($batch, $bs1));
+				
+
+				
 				}
 			
 				if (($protitle == 'BSC' || $protitle == 'BS' || $protitle == 'LLB' || $protitle == 'BA') && (strpos($batch, $bs1) !== false || strpos($batch, $bs2) !== false || strpos($batch, $bs3) !== false  || strpos($batch, $bs4) !== false || strpos($batch, $bs5) !== false || strpos($batch, $bs6) !== false || strpos($batch, $bs7) !== false  || strpos($batch, $bs8) !== false )) 
 				{	
 				    $countbs = substr_count($seminfo[0]->BATCHNAME, 'B');
+
+				   // echo $countbs; 
+
+				   // exit();
 				
 					if($countbs > 0)
 					  {
@@ -489,8 +562,18 @@ function appformfemale($regno = NULL)
 								   
 					}
 				
-				elseif($protitle == 'PHD')
+				elseif(($protitle == 'PHD' || $protitle == 'Ph.D') && (strpos($batch, $ps1) !== false || strpos($batch, $ps2) !== false || strpos($batch, $ps3) !== false || strpos($batch, $ps4) !== false || strpos($batch, $ps5) !== false || strpos($batch, $ps6) !== false ))
 					{ 
+				// 		var_dump($semdetail);
+				// var_dump($batch);
+				// var_dump($protitle);
+				// var_dump($ps1);
+				// var_dump($ps2);
+				// var_dump($ps3);
+				// var_dump($ps4);
+				// var_dump($ps5);
+				// var_dump($ps6);
+				// exit();
 						
 						$countP = substr_count($seminfo[0]->BATCHNAME, 'P');
 					
@@ -554,7 +637,29 @@ function appformfemale($regno = NULL)
 									redirect('femalePage');
 							   }
 					}
-					elseif($nationality != 'Pakistani') //|| $country != 'Pakistan' && $country != '')
+					elseif(($nationality != 'Pakistani') && (
+						strpos($batch, $bs1) !== false || 
+						strpos($batch, $bs2) !== false || 
+						strpos($batch, $bs3) !== false || 
+						strpos($batch, $bs4) !== false || 
+						strpos($batch, $bs5) !== false || 
+						strpos($batch, $bs6) !== false || 
+						strpos($batch, $bs7) !== false || 
+						strpos($batch, $bs8) !== false || 
+						strpos($batch, $ps1) !== false || 
+						strpos($batch, $ps2) !== false || 
+						strpos($batch, $ps3) !== false || 
+						strpos($batch, $ps4) !== false || 
+						strpos($batch, $ps5) !== false || 
+						strpos($batch, $ps6) !== false || 
+						strpos($batch, $ms1) !== false || 
+						strpos($batch, $ms2) !== false || 
+						strpos($batch, $ms3) !== false || 
+						strpos($batch, $ms4) !== false || 
+						strpos($batch, $ma1) !== false || 
+						strpos($batch, $ma2) !== false || 
+						strpos($batch, $ma3) !== false || 
+						strpos($batch, $ma4) !== false)) //|| $country != 'Pakistan' && $country != '')
 					
 					{ 
 						$data['StudentInfo'] = $this->Signup_model->getstudent($regno);

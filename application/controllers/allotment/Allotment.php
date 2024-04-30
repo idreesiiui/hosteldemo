@@ -5,6 +5,8 @@
 // error_reporting(E_ALL);
 require APPPATH . '/libraries/BaseController.php';
 
+
+
 /**
  * Class : User (UserController)
  * User Class to control all user related operations.
@@ -243,6 +245,8 @@ class Allotment extends BaseController
         	$userId = $this->vendorId;
 			
 			$gender = $this->gender;
+
+			$data['gender'] = $this->gender;
 			
 			$data['hosteldetail'] = $this->allotment_model->getHostelInfo($gender);
 			

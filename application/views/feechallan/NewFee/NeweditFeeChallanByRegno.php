@@ -118,6 +118,7 @@
                                             <option value="7th Extension Fee" <?php if($editFeeInfo->extension == '7th Extension Fee') {echo "selected=selected";} ?>>7th Extension Fee</option>
                                             <option value="8th Extension Fee" <?php if($editFeeInfo->extension == '8th Extension Fee') {echo "selected=selected";} ?>>8th Extension Fee</option>
                                             <option value="9th Extension Fee" <?php if($editFeeInfo->extension == '9th Extension Fee') {echo "selected=selected";} ?>>9th Extension Fee</option>
+                                            <option value="10th Extension Fee" <?php if($editFeeInfo->extension == '10th Extension Fee') {echo "selected=selected";} ?>>10th Extension Fee</option>
                                         </select>
                                     </div>
                                 </div>

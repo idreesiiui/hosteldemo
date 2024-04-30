@@ -2822,10 +2822,22 @@ class Feechallan_model extends CI_Model
 	
 	function GetstudinfoAljamia($regno)
     {
-		return $this->db->select('REGNO, NATIONALITY, PROTITTLE')
+		$result = $this->db->select('REGNO, NATIONALITY, PROTITTLE')
 						->where('REGNO', $regno)
 						->get('TBL_HSTUDENTS')
-						->row();		
+						->row();
+
+		if(empty($result)){
+				$otherdb = $this->load->database('otherdb', TRUE);
+				$otherdb->select('*');
+				$otherdb->from('students');
+				//$otherdb->where('IS_ACTIVE', 1);
+				$otherdb->where('REGNO', $regno);				
+				$query = $otherdb->get();
+				$result = $query->result();
+			}      
+		//var_dump($result); exit();
+			return $result;  		
 	}
 	
 	function GetHistoryBatch($studregno, $structsemcode)
@@ -3006,7 +3018,7 @@ class Feechallan_model extends CI_Model
 	function GetStudAllotmentregnoInfo($studpostregno, $gender)
     {
         if($gender == 'Male'){
-			return $this->otherdb->select('tbl_maleapplication.REGNO as regno')
+			$result = $this->otherdb->select('tbl_maleapplication.REGNO as regno')
 						->where('tbl_maleapplication.REGNO', $studpostregno)
 						->where('tbl_maleapplication.GENDER', $gender)
 						->where('tbl_maleapplication.STATUS', 1)
@@ -3014,14 +3026,17 @@ class Feechallan_model extends CI_Model
 						->result();
 		}
 		elseif($gender == 'Female'){
-			return $this->otherdb->select('tbl_application.regno as regno')
+			$result = $this->otherdb->select('tbl_application.regno as regno')
 						->where('tbl_application.REGNO', $studpostregno)
 						->where('tbl_application.GENDER', $gender)
 						->where('tbl_application.STATUS', 1)
 						->get('tbl_application')
 						->result();
 		}
-       
+		// var_dump($gender);
+		// var_dump($studpostregno);
+		// var_dump($result); exit();
+      return $result; 
     }
 	
 	function CheckFeestatusRegno($regno, $gender, $csem, $feestructureid)
@@ -3072,10 +3087,22 @@ class Feechallan_model extends CI_Model
 	
 	function getFeestudInfoAljamia($regno)
     {
-		return $this->db->select('REGNO, STUDENTNAME, FATHERNAME, PROGRAME, CNIC, NATIONALITY')
+		$result = $this->db->select('REGNO, STUDENTNAME, FATHERNAME, PROGRAME, CNIC, NATIONALITY')
 					->where('REGNO', $regno)
 					->get('TBL_HSTUDENTS')
-					->row();		
+					->row();	
+
+		if(empty($result)){
+				$otherdb = $this->load->database('otherdb', TRUE);
+				$otherdb->select('*');
+				$otherdb->from('students');
+				//$otherdb->where('IS_ACTIVE', 1);
+				$otherdb->where('REGNO', $regno);				
+				$query = $otherdb->get();
+				$result = $query->row();
+			}      
+		//var_dump($result); exit();
+			return $result;	
 	}
 	
 	function NewFeeStructureHeadListById($feestructureid)
@@ -3113,9 +3140,21 @@ class Feechallan_model extends CI_Model
 	
 	function GetGenderByRegno($studregno)
     {
-        return $this->db->select('REGNO, GENDER')
+        $result = $this->db->select('REGNO, GENDER')
 			        ->where('REGNO', $studregno)
 			        ->get('TBL_HSTUDENTS')
 			        ->row();
+
+		if(empty($result)){
+				$otherdb = $this->load->database('otherdb', TRUE);
+				$otherdb->select('*');
+				$otherdb->from('students');
+				//$otherdb->where('IS_ACTIVE', 1);
+				$otherdb->where('REGNO', $studregno);				
+				$query = $otherdb->get();
+				$result = $query->row();
+			}      
+		//var_dump($result); exit();
+			return $result;
     }
 }  

@@ -261,9 +261,38 @@ body {
 
                      <?php if(!empty($viewcardsInfo[0]->ID) && !empty($oraclepic)){ 
 
-                     $blobimg = $oraclepic[0]->STUDPIC; ?>
+                     $blobimg = $oraclepic[0]->STUDPIC; 
+                     
 
-                            <img class="std_img" alt="student picture" src ="data:image/jpeg;base64,<?php echo base64_encode($blobimg); ?>"/>
+
+
+                    // $blobimg = $StudentInfo[0]->picture;
+
+                            // Decode the Base64 string, getting the binary data of the image
+                            $imageData = base64_decode($blobimg);
+
+                           $image_name = str_replace("/", "", $StudentInfo[0]->REGNO);
+
+                            // Specify the path where you want to save the image
+                            $filePath = 'assets/student_pics/'.$image_name.'.png';
+
+                            // Write the binary data to the file
+
+                            $resutl = file_put_contents($filePath, $imageData);
+                            
+                            ?>
+                            <img class="std_img" alt="student picture" src ="assets/student_pics/<?= $image_name ?>.png"/>
+
+
+
+
+
+
+                    
+
+
+
+                            <!-- <img class="std_img" alt="student picture" src ="data:image/jpeg;base64,<?php //echo base64_encode($blobimg); ?>"/> -->
 
                      <?php } else {?>
        	             <img class="std_img no_img" alt="student picture" src="<?php echo base_url()?>uploads/image/noimg.png">

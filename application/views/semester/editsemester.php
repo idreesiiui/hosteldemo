@@ -58,7 +58,7 @@
                                 <div class="col-md-6">                                
                                        <div class="form-group">
                                         <label for="smecode">Batch for Open Reg</label><b style="color:grey; font-size:10px"> Batch & Programe like BF18, MS18, PF17</b>
-                                        <input type="text" class="form-control required" id="batchname" name="batchname" maxlength="128" style="text-transform:uppercase" value="<?php echo $semester->BATCHNAME ?>">
+                                        <input type="text" class="form-control required" id="batchname" name="batchname" maxlength="300" style="text-transform:uppercase" value="<?php echo $semester->BATCHNAME ?>">
                                         
                                        </div>
                                     </div>
