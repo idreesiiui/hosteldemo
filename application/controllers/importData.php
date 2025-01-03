@@ -20,15 +20,17 @@ class importData extends CI_Controller
         parent::__construct();
         $this->load->model('importdata_model');
         $this->load->library('excel');
-
         $this->otherdb = $this->load->database('otherdb', TRUE); 
 
     }
 
+    /**
+     * Index Page for this controller.
+     */  
 
-    public function import_cms_data(){
+    public function import_cms_data(){ 
 
-       $path = 'uploads/cms_data/pic_data/info_data_1.xlsx';
+       $path = 'uploads/cms_data/pic_data/degree_duration_data.xlsx';
        
        $object = PHPExcel_IOFactory::load($path);
 
@@ -39,88 +41,110 @@ class importData extends CI_Controller
         $count = 0;
         for($row=2; $row<=$highestRow; $row++)
         {
-         $regno = $worksheet->getCellByColumnAndRow(0, $row)->getValue();         
-         $PROGRAME = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-         // $univ_email = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-         // $mobile = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-         // $department = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+         //$picture = $worksheet->getCellByColumnAndRow(2, $row)->getValue();         
+         $regno = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+         //$name = $worksheet->getCellByColumnAndRow(1, $row)->getValue();         
+        // $PROGRAME = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+       //  $current_semester = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+        // $nationality = $worksheet->getCellByColumnAndRow(2, $row)->getValue();         
+        // $country = $worksheet->getCellByColumnAndRow(4, $row)->getValue(); 
+         //$city = $worksheet->getCellByColumnAndRow(5, $row)->getValue(); 
+
+
+
+         // $name = $worksheet->getCellByColumnAndRow(1, $row)->getValue();         
+          $DEGREEDURATION = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+          $STADMISSION = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
          // $dob = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
          // $disablity = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
-         // $district = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
-         // $gender = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
-         // $nationality = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
+         // $gender = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+          //$nationality = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
          // $p_address = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
-         // $email = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+         // $email = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
          // $phone = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
-         // $c_address = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
-         // $father_name = $worksheet->getCellByColumnAndRow(22, $row)->getValue();
+        //  $c_address = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+        // $father_name = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
          // $cnic = $worksheet->getCellByColumnAndRow(23, $row)->getValue();
 
-         $ptitle = explode(" ", $PROGRAME);
+         // $district = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
 
-            if($ptitle[0] == 'Master'){
-                $progamm = 'MBA';
-            } else if($ptitle[0] == 'Bachelor'){
-                $progamm = 'BBA';
-            }
+         //  $univ_distance = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+         // $univ_email = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+         // // $mobile = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+         //  $department = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
 
-            $progamm = $ptitle[0];  
+         // $ptitle = explode(" ", $PROGRAME);
+
+         //    if($ptitle[0] == 'Master'){
+         //        $progamm = 'MBA';
+         //    } else if($ptitle[0] == 'Bachelor'){
+         //        $progamm = 'BBA';
+         //    }
+
+         //    $progamm = $ptitle[0];  
 
 
          $data = array(
          'REGNO'  => $regno,
-         'PROTITTLE'   => $progamm,
-         //'univ_email'    => $univ_email,
-        // 'mobile'  => $mobile,
-         // 'department'   => substr($department, 14),
-          //'country'   => $country,
-          //'dob'   => date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($dob)),
+         //'picture'   => $picture,
+         // 'STUDENTNAME'   => $name,
+         // 'PROGRAME'   => $PROGRAME,
+        // 'PROTITTLE'   => $progamm,
+        //  'current_semester'    => $current_semester,
+        //  'CITY'    => $city,
+          'DEGREEDURATION'    => $DEGREEDURATION,
+        //  'STADMISSION'    => $STADMISSION,
+        // 'COUNTRY'   => $country,
+          'STADMISSION'   => date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($STADMISSION)),
+         // 'STUDENTDOB'   => date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($dob)),
          // 'disablity'   => $disablity,
-         // 'district'   => $district,
-          //'gender'   => $gender,
-          //'nationality'   => $nationality,
-         // 'p_address'   => $p_address,
-          //'c_address'   => $c_address,
-          //'email'   => $email,
-          //'phone'   => $phone,
-          //'father_name'   => $father_name,
-          //'cnic'   => $cnic,
-         );
-          // var_dump($data);
-          // exit();
+        //  'GENDER'   => $gender,
+       //   'NATIONALITY'   => $nationality,
+       //   'PERMANENT'   => $p_address,
+       //   'PREADD'   => $c_address,
+       //   'email'   => $email,
+       //   'phone'   => $phone,
+       //   'FATHERNAME'   => $father_name,
+         // 'CNIC'   => $cnic,
 
-         $where = array('REGNO'  => $regno);
+
+         // 'univ_distance'  => $univ_distance,
+         // 'univ_email'    => $univ_email,
+         // 'DEPARTMENTNAME'   => substr($department, 14),
+         // 'DISTRICT'   => $district,
+         );
+       // var_dump($data);
+       //  exit();
+
+         $where = array(
+            'REGNO'  => $regno,
+           // 'GENDER' => null
+        );
 
         $alreadyexist = $this->importdata_model->find('students',$where);
-        var_dump($alreadyexist);
+       // var_dump($alreadyexist);
 
+           if($alreadyexist == 1){
            echo($count);
-           if($alreadyexist === 1){
-           var_dump($alreadyexist);
-        // exit();
+           // var_dump($alreadyexist);
+           //  exit();
+
+
         
            $count++;
 
 
                $result = $this->importdata_model->updateData($where,'students',$data);
-               echo 'Data Imported successfully';
+               //$result = $this->importdata_model->insertData('students',$data);
+               echo 'Data Updated successfully';
               echo($regno);
               var_dump($result);
-              // exit();
+             // exit();
             }
         }
-       }
-
-      /// 
+        }
     }
-
-
-
-
-
-    /**
-     * Index Page for this controller.
-     */    
+ 
 	  
 	public function import_data(){
 

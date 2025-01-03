@@ -59,8 +59,13 @@ body {
     margin-left: 12px;
 }
 .hostelbg{
-	position:absolute; color:#3390FF; font:bold 18pt Arial; margin-top: 120px;
-    margin-left: 105px;opacity: 0.4; 
+	position: absolute;
+    color: #3390FF;
+    font: bold 18pt Arial;
+    top: 70pt;
+    left: 99pt;
+    opacity: 0.6;
+    transform: rotate(90deg);
 }
 .issue{
 	position:absolute; color:#000000; font:bold 10pt Arial; margin-top: 116px;
@@ -95,6 +100,10 @@ body {
     margin-left: 12px;
 }
 
+.front_side, .back_side {
+	position: relative;
+}
+
 @media print
 {    
     .no-print, .no-print *
@@ -113,13 +122,13 @@ border: 1px solid black;padding: 8px 15px;text-align: center;text-decoration: no
     right: 13em;"><img src="<?php echo base_url() ?>/assets/images/print.png" width=30 height=30 style="position: relative; top: 1px;left: -8px;margin-bottom: -7px;" >Print</button>
 <?php if(!empty($viewcardsInfo)) {
 	
-	//echo count($viewcardsInfo);exit();
+// var_dump($viewcardsInfo);exit();
 	
 foreach($viewcardsInfo as $viewcard )
 {
 ?>
 
-<div>
+<div class="front_side">
 
 <!--<img src="<?php //echo base_url() ?>/uploads/image/iiui.png" class="logoiiu">-->
 <span class="header">International Islamic University, Islamabad</span>
@@ -175,25 +184,25 @@ foreach($viewcardsInfo as $viewcard )
 <div class="email">CNIC. <?php echo '<b class="underline">'.str_replace('-','', $viewcard['cnic']).'</b>'?></div>
 <div class="reg">Reg No. <?php echo '<b class="underline">'.$viewcard['regno'].'</b>'?></div>
 <?php if($viewcard['gender'] == 'Male') {?>
-<img src="<?php echo base_url() ?>/uploads/image/bgpic-23.jpeg" width=330 height=211 border=0> 
+<img src="<?php echo base_url() ?>/uploads/image/bgpic-23.jpg" width=330 height=211 border=0> 
 <?php
 }
 elseif ($viewcard['gender'] == 'Female') { ?>
-	<img src="<?php echo base_url() ?>/uploads/image/bgpic-23.jpeg" width=330 height=211 border=0> 
+	<img src="<?php echo base_url() ?>/uploads/image/bgpic-24-bg.jpg" width=330 height=211 border=0> 
 <?php 
 }
 ?>
 
 <!-- First Side End Div -->
 </div>
-<div>
+<div class="back_side">
 
 <div class="barcode"><?php echo str_replace(' ', '', '~1%'.$viewcard['name'].'^'.$viewcard['regno'].'?')?></div>
 <div class="emailback"><?php echo '<b class="underline">'.strtolower($viewcard['email']).'</b>'?></div>
 <div class="instruction">Instructions</div>
 <?php if($viewcard['gender'] == 'Male') {?>
 <div class="cond">Boarder's seat shall be liable for cancellation on absenting himself without leave<br> approval from Vice President (Academics).<br><br>
-Card (along with Hostel Clearance Form) must be submitted in Provost Office <br>while leaving the hostel.In case of Overstay Rs 100-per day will be charged.<br> In case of losing card, duplicate will be issued on payment of Rs 500.<br><br>
+Card (along with Hostel Clearance Form) must be submitted in Provost Office <br>while leaving the hostel.In case of Overstay Rs 100-per day will be charged.<br> In case of losing card, duplicate will be issued on payment of Rs 600.<br><br>
 After Expiry of Validity date if student intends to extend his hostel accomodation,<br> he will have to apply for seat renewal according schedule displayed on notice boards<br> in the start of every new semester.
 </div>
 <?php } elseif($viewcard['gender'] == 'Female') { ?>

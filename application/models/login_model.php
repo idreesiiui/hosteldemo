@@ -71,7 +71,7 @@ class Login_model extends CI_Model
 				$result = $query->result();
 			}      
 		//var_dump($result); exit();
-			return $result; 
+			return $result;
     }
 	
 	function Sisregno($user)
@@ -80,10 +80,8 @@ class Login_model extends CI_Model
 			        ->where('TBL_HSTUDENTS.REGNO', $user)
 			        ->get('TBL_HSTUDENTS')
 			        ->num_rows();
-
-
-
-		if(empty($result)){
+        
+       if(empty($result)){
 				$otherdb = $this->load->database('otherdb', TRUE);
 				$otherdb->select('*');
 				$otherdb->from('students');
@@ -99,9 +97,8 @@ class Login_model extends CI_Model
     }
 	
 	function SisCnic($cnic)
-    {       
-        
-       $result = $this->db->select('REGNO, CNIC, STUDENTNAME')
+    {
+        $result = $this->db->select('REGNO, CNIC, STUDENTNAME')
 				        ->where('TBL_HSTUDENTS.CNIC', str_replace('-','', $cnic))
 				        ->get('TBL_HSTUDENTS')
 				        ->num_rows();
@@ -473,11 +470,11 @@ class Login_model extends CI_Model
 	
 	function getsendemail($gender, $emailtype)
 	{
-		//return $this->otherdb->where('GENDER', $gender)
-			//		->where('TYPE', $emailtype)
-			//		->order_by('ID', 'ASC')
-			//		->get('tbl_email')
-			//		->result();
+		return $this->otherdb->where('GENDER', $gender)
+					->where('TYPE', $emailtype)
+					->order_by('ID', 'ASC')
+					->get('tbl_email')
+					->result();
 	}
 		
 	function GetGenderById($userId)

@@ -354,7 +354,7 @@ class Regbox extends CI_Controller
 			
 			$stregexist = $this->Signup_model->checkreg($regno);
 			
-			$gender = ($stregexist[0]->GENDER);
+			$gender = $stregexist[0]->GENDER;
 	
 			//$streg = $this->Signup_model->checkstdreg($regno);
 		
@@ -364,12 +364,12 @@ class Regbox extends CI_Controller
 				$this->session->set_flashdata('error', 'Invalid Registration Number!');
 				redirect('malePage');
 			}
-			if($gender == 'M')
+			if($gender == 'M' || $gender == 'Male')
 			{
 				$gender = 'Male';
 				$streg = $this->Signup_model->checkMstdreg($regno,$gender);
 			}
-			elseif($gender == 'F')
+			elseif($gender == 'F' || $gender == 'Female')
 			{
 				$gender = 'Female';
 				$streg = $this->Signup_model->checkFstdreg($regno,$gender);
@@ -385,6 +385,10 @@ class Regbox extends CI_Controller
 			}
 			
 			$malestudent = $this->Signup_model->getstudentgenderbyMale($regno);
+
+			//var_dump($malestudent); exit();
+
+			//var_dump($malestudent[0]->DISABLE_STD); exit();
 				
 			if($malestudent != TRUE)
 			{
@@ -393,16 +397,6 @@ class Regbox extends CI_Controller
 			}
 				
 			$batchcode = $this->Signup_model->getbatchcode($regno);
-
-			// $ptitle = explode(" ", $batchcode[0]->PROGRAME);
-
-			// if($ptitle[0] == 'Master'){
-			// 	$progamm = 'MBA';
-			// } else if($ptitle[0] == 'Bachelor'){
-			// 	$progamm = 'BBA';
-			// }
-
-			// $progamm = $ptitle[0];	
 			
 			$protitle = $batchcode[0]->PROTITTLE;
 
@@ -411,7 +405,8 @@ class Regbox extends CI_Controller
 			$btch = $findbatch[sizeof($findbatch) - 1];
 
 			$batch = str_replace(' ', '', ($batchcode[0]->BATCHNAME) ?? $btch);
-			
+
+			//$batch = str_replace(' ', '', $batchcode[0]->BATCHNAME);
 
 			$nationality = $batchcode[0]->NATIONALITY; 
 
@@ -419,11 +414,18 @@ class Regbox extends CI_Controller
 			
 			$seminfo = $this->Signup_model->getsemestercode($gender);
 			
-			$semdetail = explode(',', $seminfo[0]->BATCHNAME);	
+			$semdetail = explode(',', $seminfo[0]->BATCHNAME);
 
-				//echo $protitle;	
+			// var_dump($seminfo);
 
-//var_dump($semdetail); exit();
+			// echo "<br>";	
+
+			// echo $protitle;	
+
+			// echo "<br>";
+
+			// exit();	
+
 				
 			if(strpos($protitle, 'BS') !== false || strpos($protitle, 'LLB') !== false || strpos($protitle, 'BA') !== false || strpos($protitle, 'MA') !== false || strpos($protitle, 'MSC') !== false || strpos($protitle, 'MS') !== false || strpos($protitle, 'PHD') !== false )
 			{
@@ -451,43 +453,69 @@ class Regbox extends CI_Controller
 				$phd6 = ltrim($semdetail[21], $semdetail[21][0]);
 				
 			}
+			// var_dump($semdetail);
+			// var_dump($seminfo);
 
-				// var_dump($batch);
+			// echo "<br>";	
 
-				//  echo "</br>==========bs==============</br>";
+			// echo $protitle;	
 
-				//  echo $bs1 . '==' . $bs2. '==' . $bs3. '==' . $bs4. '==' . $bs5. '==' . $bs6. '==' . $bs7. '==' . $bs8;	
-				// echo "</br>==========bs==============</br>";
+			// echo "<br>";
 
-				// echo "</br>===========ma=============</br>";
+			// 	  echo $batch;
 
-				// echo $ma1 . '==' . $ma2. '==' . $ma3. '==' . $ma4;	
-				// echo "</br>===========ma=============</br>";
+			// 	  echo "</br>==========bs==============</br>";
 
-				// echo "</br>===========ms=============</br>";
+			// 	 echo $bs1 . '==' . $bs2. '==' . $bs3. '==' . $bs4. '==' . $bs5. '==' . $bs6. '==' . $bs7. '==' . $bs8;	
+			// 	echo "</br>==========bs==============</br>";
 
-				// echo $ms1 . '==' . $ms2. '==' . $ms3. '==' . $ms4;	
-				// echo "</br>===========ms=============</br>";
+			// 	echo "</br>===========ma=============</br>";
 
-				// echo "</br>===========phd=============</br>";
+			// 	echo $ma1 . '==' . $ma2. '==' . $ma3. '==' . $ma4;	
+			// 	echo "</br>===========ma=============</br>";
 
-				// echo $phd1 . '==' . $phd2. '==' . $phd3. '==' . $phd4. '==' . $phd5. '==' . $phd6;	
-				// echo "</br>============phd============</br>";
+			// 	echo "</br>===========ms=============</br>";
 
-				//  var_dump(strpos($batch, $phd6));
+			// 	echo $ms1 . '==' . $ms2. '==' . $ms3. '==' . $ms4;	
+			// 	echo "</br>===========ms=============</br>";
 
-				//  echo "</br>============phd============</br>";
-				// var_dump($semdetail);
+			// 	  var_dump(strpos($batch, $ms1));
+			// 	  var_dump(strpos($batch, $ms2));
+			// 	  var_dump(strpos($batch, $ms3));
+			// 	  var_dump(strpos($batch, $ms4));
 
-				// exit();
+			// 	echo "</br>===========phd=============</br>";
+
+			// 	echo $phd1 . '==' . $phd2. '==' . $phd3. '==' . $phd4. '==' . $phd5. '==' . $phd6;	
+			// 	echo "</br>============phd============</br>";
+
+			// 	  var_dump(strpos($batch, $phd1));
+			// 	  var_dump(strpos($batch, $phd2));
+			// 	  var_dump(strpos($batch, $phd3));
+			// 	  var_dump(strpos($batch, $phd4));
+			// 	  var_dump(strpos($batch, $phd5));
+			// 	  var_dump(strpos($batch, $phd6));
+
+			// 	 echo "</br>============phd============</br>";
+			// 	var_dump($semdetail);
+
 				
-			if (($protitle == 'BS' || $protitle == 'LLB' || $protitle == 'BA') && (strpos($batch, $bs1) !== false || strpos($batch, $bs2) !== false || strpos($batch, $bs3) !== false  || strpos($batch, $bs4) !== false || strpos($batch, $bs5) !== false || strpos($batch, $bs6) !== false || strpos($batch, $bs7) !== false  || strpos($batch, $bs8) !== false )) 
+
+			// var_dump($malestudent[0]->DISABLE_STD); 
+
+
+			// var_dump($malestudent[0]->DISABLE_STD != 'Others');
+			//  var_dump($malestudent[0]->DISABLE_STD != 'Hearing');
+
+			// exit();
+				
+			if (($protitle == 'BSC' || $protitle == 'BS' || $protitle == 'LLB' || $protitle == 'BA') && (strpos($batch, $bs1) !== false || strpos($batch, $bs2) !== false || strpos($batch, $bs3) !== false  || strpos($batch, $bs4) !== false || strpos($batch, $bs5) !== false || strpos($batch, $bs6) !== false || strpos($batch, $bs7) !== false  || strpos($batch, $bs8) !== false )) 
 			{
 				$countbs = substr_count($seminfo[0]->BATCHNAME, 'B');
 
 				//var_dump($semdetail);
 
-				///exit();
+				//exit();
 				
 				if($countbs > 0)
 				{
@@ -620,7 +648,7 @@ class Regbox extends CI_Controller
 				}
 			}
 					
-			elseif(($protitle == 'MS' || $protitle == 'LLM') && (strpos($batch, $ms1) !== false || strpos($batch, $ms2) !== false || strpos($batch, $ms3) !== false || strpos($batch, $ms4) !== false))
+			elseif(($protitle == 'MS' || $protitle == 'LLM') && (strpos($batch, trim($ms1)) !== false || strpos($batch, trim($ms2)) !== false || strpos($batch, trim($ms3)) !== false || strpos($batch, trim($ms4)) !== false))
 					
 			{
 				$countMs = substr_count($seminfo[0]->BATCHNAME, 'M');
@@ -747,21 +775,23 @@ class Regbox extends CI_Controller
 					else
 					{  
 									  
-						$this->session->set_flashdata('error', 'Sorry! you do not meet the criteria. please check above mention criteria1');
+						$this->session->set_flashdata('error', 'Sorry! you do not meet the criteria. please check above mention criteria...');
 						
 						redirect('malePage');
 					}
 				}
 				else
 			   	{  
-				  $this->session->set_flashdata('error', 'Sorry! you do not meet the criteria. please check above mention criteria2');
+				  $this->session->set_flashdata('error', 'Sorry! you do not meet the criteria. please check above mention criteria.....');
 					redirect('malePage');
 			   	}
 						
 			}
-			elseif($nationality != 'Pakistani') //|| $country != 'Pakistan' && $country != '')
+			//elseif($nationality != 'Pakistani'){
+
+			elseif($nationality != 'Pakistani' || $malestudent[0]->DISABLE_STD == 'Others' || $malestudent[0]->DISABLE_STD == 'Hearing' || $malestudent[0]->DISABLE_STD == 'Mental' || $malestudent[0]->DISABLE_STD == 'Physical' || $malestudent[0]->DISABLE_STD == 'Speech' || $malestudent[0]->DISABLE_STD == 'Sight'){
 						
-			{ 
+			 
 				$data['StudentInfo'] = $this->Signup_model->getstudent($regno);
 		
 				$data['semestercode'] = $this->Signup_model->getsemestercode($gender);
@@ -821,7 +851,7 @@ class Regbox extends CI_Controller
 			}
 			else
 		   	{  
-		      	$this->session->set_flashdata('error', 'Sorry! you do not meet the criteria. please check above mention criteria4');
+		      	$this->session->set_flashdata('error', 'Sorry! you do not meet the criteria. please check above mention criteria..');
 
 				redirect('malePage');
 		   	}			
@@ -1868,7 +1898,7 @@ function getmalestudentSeatInter()
 		$this->load->helper('date_helper');
             
         $this->form_validation->set_rules('name','Full Name','trim|required|max_length[128]|xss_clean');
-        $this->form_validation->set_rules('email','Email','trim|required|valid_email|xss_clean|max_length[128]');
+        $this->form_validation->set_rules('email','Email','trim|required|max_length[128]');
         $this->form_validation->set_rules('password','Password','required|max_length[20]');
         $this->form_validation->set_rules('cpassword','Confirm Password','trim|required|matches[password]|max_length[20]');
 		$this->form_validation->set_rules('regno','regno','trim|required|max_length[128]|xss_clean');
@@ -1897,7 +1927,7 @@ function getmalestudentSeatInter()
         if($this->form_validation->run() == FALSE)
         {
             $regno = $this->input->post('regno');
-        var_dump(validation_errors()); exit();
+        //var_dump(validation_errors()); exit();
 				
 			$this->session->set_flashdata('error', 'Please fill all required fields and update your Student Profile in Student Info (Al-Jamia) from Admission Section.');
 			$encoderegno = base64_encode($regno);
@@ -2034,6 +2064,10 @@ function getmalestudentSeatInter()
 
 
 					$distance = $this->Signup_model->checkDistance($paddress, $district, $city);
+
+					//$malestudent = $this->Signup_model->getstudentgenderbyMale($regno);
+
+					// && (|| $malestudent[0]->DISABLE_STD == 'Others' || $malestudent[0]->DISABLE_STD == 'Hearing' || $malestudent[0]->DISABLE_STD == 'Mental' || $malestudent[0]->DISABLE_STD == 'Physical' || $malestudent[0]->DISABLE_STD == 'Speech' || $malestudent[0]->DISABLE_STD == 'Sight')
 					
 					if ($distance == false && $nationality == 'Pakistani')
 					{ 

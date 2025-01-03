@@ -1,5 +1,11 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// ini_set('memory_limit', '-1');
+// error_reporting(E_ALL);
+
+
 /**
  * Class : Login (LoginController)
  * Login class to control to authenticate user credentials and starts user's session.
@@ -37,8 +43,6 @@ class Login extends CI_Controller
     function isLoggedIn()
     {
 		$isLoggedIn = $this->session->userdata('isLoggedIn');
-
-
         
         if(!isset($isLoggedIn) || $isLoggedIn != TRUE)
         {
@@ -94,9 +98,17 @@ class Login extends CI_Controller
                 $gender = $this->input->post('gender');
 				$regno = $this->input->post('regno');
 				
-                $userInfo = array('email'=>$email, 'password'=>getHashedPassword($password), 'roleId'=>$roleId,'regno'=>$regno, 'name'=> $name,
-                                    'mobile'=>$mobile,'gender'=>$gender, 'createdBy'=>$roleId, 'createdDtm'=>date('Y-m-d H:i:s'));
-                
+                $userInfo = array(
+                    'email' => $email, 
+                    'password' => getHashedPassword($password), 
+                    'roleId' => $roleId,
+                    'regno' => $regno, 
+                    'name' =>  $name,                                    
+                    'mobile' => $mobile,
+                    'gender' => $gender, 
+                    'createdBy' => $roleId, 
+                    'createdDtm' => date('Y-m-d H:i:s')
+                );                
                 
                 $result = $this->user_model->addNewUser($userInfo);
                 
@@ -190,10 +202,14 @@ class Login extends CI_Controller
 			$user = $this->input->post('user');
             $cnic = str_replace('-','',$this->input->post('password'));
 			$studregno = $this->input->post('user');
+
+
 			
 			$sisregno = $this->login_model->Sisregno($user);
 			
 			$Sisresult = $this->login_model->SISUserInfo($user);
+
+
 			
 			$SIScnic = str_replace('-','', $Sisresult[0]->CNIC);
 			
@@ -203,51 +219,58 @@ class Login extends CI_Controller
                 
                 redirect('/login');
 			}
+
 			if(trim($SIScnic) != trim($cnic))
 			{
 				$this->session->set_flashdata('error', 'Invalid CNIC. Enter CNIC as per University Record OR Update your CNIC from Admission Section');
                 
                 redirect('/login');
-			}
-			if($sisregno > 0)
-		    {
-				$result = $this->login_model->SISUserInfo($user);
-
-               // var_dump($result); exit();
+			  }
+			  if($sisregno > 0)
+			    {
+					$result = $this->login_model->SISUserInfo($user);
+					
+					foreach ($result as $key => $res)
+                    {
+                		$gender = $res->GENDER;
+    					if($gender == 'M' || $gender == 'Male')
+    					{
+    							$gender = 'Male';
+    							$userId = $result[0]->REGNO;
+    					}
+    					elseif($gender == 'F' || $gender == 'Female')
+    					{
+    							$gender = 'Female';
+    							$userId = $result[0]->REGNO;
+    					}
+    					$roleId = 4;
+    					$role = 'Student'; 
+    					$name = $res->STUDENTNAME;
+    					$studregno = $res->REGNO;
+    					
+    				}
+					
+				}
 				
-				foreach ($result as $key => $res)
-                {
-            		$gender = $res->GENDER;
-					if($gender == 'M' || $gender == 'Male')
-					{
-						$gender = 'Male';
-						$userId = $result[0]->REGNO;
-					}
-					elseif($gender == 'F' || $gender == 'Female')
-					{
-						$gender = 'Female';
-						$userId = $result[0]->REGNO;
-					}
-					$roleId = 4;
-					$role = 'Student'; 
-					$name = $res->STUDENTNAME;
-					$studregno = $res->REGNO;							
-				}					
-			}
+		 $semcode = $this->login_model->semcode($gender);
+		 
+		 $csemcode = $semcode->SEMCODE;
 
-            
-    		$semcode = $this->login_model->semcode($gender);
-    		 
-    		$csemcode = $semcode->SEMCODE;
-    		 
-    		$feetype=$this->feechallan_model->CheckFeeInfo($studregno,$gender,$csemcode);
+         //echo $csemcode;
 
-    		if(!empty($feetype))
-    		{
-    			$feestatus = $feetype->feetype;
-    		} else {
-    			$feestatus = 'NEW HOSTEL FEE';
-    		}
+
+         //exit();
+		 
+		 $feetype = $this->feechallan_model->CheckFeeInfo($studregno, $gender, $csemcode);
+
+         //var_dump($feetype);
+	
+		if(!empty($feetype))
+		{
+			$feestatus = $feetype->feetype;
+		} else {
+			$feestatus = 'NEW HOSTEL FEE';
+		}
             $sessionArray = array(
                         'userId'=>$userId,                    
                         'role'=>$roleId,
@@ -261,7 +284,9 @@ class Login extends CI_Controller
                         'isLoggedIn' => TRUE
                     );
                             
-            $this->session->set_userdata($sessionArray);    	
+            $this->session->set_userdata($sessionArray);
+    		//pre($sessionArray);
+            //exit();
             redirect('/dashboard');
         }
            

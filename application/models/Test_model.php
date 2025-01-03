@@ -8,6 +8,16 @@ class Test_model extends CI_Model
         
     }
 
+    function getApplicantByTrackingID($id){
+        $query = $this->otherdb->where('STUDENTID',$id)->get('tbl_maleapplication');
+
+        if($query->num_rows() >= 1){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
      function isSeatAccupied($id){
         $query = $this->otherdb->where('SEATID', $id)

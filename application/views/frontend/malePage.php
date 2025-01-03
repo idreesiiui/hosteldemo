@@ -99,7 +99,8 @@ MAIN
       
         <!-- Modal Header -->
         <div class="modal-header bg-success text-white">
-          <h5 class="modal-title"><img src="<?php echo base_url() ?>/assets/frontend/img/usis/iiui-logo.png" width=60; height=60 />
+            <img src="<?php echo base_url() ?>/assets/frontend/img/usis/iiui-logo.png" width=60; height=60 />
+          <h5 class="modal-title" style="line-height: 2.6; padding-left: 1px;">
           Online Application for Hostel Registration
           </h5>
           <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
@@ -109,7 +110,9 @@ MAIN
         <div class="modal-body">
           <h5 align="center"> Registration for <?php echo $campus; ?> Hostel IIUI closed</h5>
           <h4 style="color: #F30;" class="blink" align="center">Registration Closed</h4>
-          <p style="color:red">For more information and latest update please visit at <a href="http://www.iiu.edu.pk/?page_id=17088">Click here</a> </p>
+          <h4 style="color: #F30;" align="center">Registration will be open for Spring 2023 and previous batches for BS, MS and Ph. D very soon!</h4>
+          <h6 style="color: #000;" align="center">Important Note: Registration doesn't ensure the allocation of hostel seat</h6>
+          <p style="color:red; text-align: center;">For online Application visit at <a href="https://cms.iiu.edu.pk/">Click here</a> </p>
           <div class="col-md-4">
                 <?php
                     $this->load->helper('form');
@@ -191,7 +194,8 @@ MAIN
                     }
                ?>
 			  <p class="bg-success text-white text-center">Boys Hostels</p>              
-              <h6> Registration for <b>(Foreign Students)</b> <?php echo $semestercode[0]->SEMESTEROPENREG; ?>
+              <h6 class="text-center"> <b>On the vision of President IIU </b></br>Provost office intended to allot hostels for fresh students
+All students of <?php echo $semestercode[0]->SEMESTEROPENREG; ?>  and Spring 2024 semester</br> shall apply in link below  
 
                 <?php 
 
@@ -257,7 +261,7 @@ MAIN
 				?> and before</strong></h5>
               <h5 style="font-size:12px;"> New Seat Application for <strong>(PHD)</strong> Programes from <strong>Current Semester and before</strong></h5>
           -->
-              <h5 style="font-size:12px;"> New Seat Application for <strong>(All Overseas Student)</strong> Programs from <strong> Current Semester<!-- and before--></strong></h5>
+              <!-- <h5 style="font-size:12px;"> New Seat Application for <strong>(All Overseas Student)</strong> Programs from <strong> Current Semester and before</strong></h5> -->
             
               <div class="col-md-4">
                     <?php
@@ -407,6 +411,12 @@ MAIN
             </div>
         </div>
     </div>
+
+
+     
+
+
+
     
      <!-- Seat change close Modal -->
   <div class="modal fade" id="schangecloseModal">
@@ -424,17 +434,7 @@ MAIN
         <!-- Modal body -->
         <div class="modal-body">
           <h5 align="center"> Seat change / Interchange for <?php echo $campus; ?> Hostel IIUI closed</h5>
-          <div style="color: #F30;" align="center">
-          <h4>Seat Change / Interchange Closed</h4>
-
-          <p>We would like to inform you that the seat change application process will be open today at 9:30 AM. </p>
-
-          <h4>Date and Time for Seat Change Application: </h4>
-          <ul style="text-align: left;" class="blink">
-         <li><strong> Date: 23 Oct 2023</strong></li>
-         <li><strong> Time: 9:30 AM</strong></li>
-            </ul>
-        </div>
+          <h4 style="color: #F30;" class="blink" align="center">Seat Change / Interchange Closed</h4>
           <p>For more information and latest update please visit <a href="http://www.iiu.edu.pk/?page_id=17088">here</a> </p>
         </div>
         
@@ -454,10 +454,13 @@ MAIN
                 <p class="card-text">
                      Register Yourself for Allotment.
                 </p>
-                <?php
+                <!-- <a href="#" class="btn btn-white btn-round btn-disable">
+                <i class="fas fa-hand-pointer"></i> Click Here
+                </a> -->
+                 <?php
                 if(false){ ?>                
 
-                <a href="https://forms.gle/MLGWeXG1bzgqZ1SNA" class="btn btn-white btn-round btn-disable">
+                <a href="https://forms.gle/cTsFnefNoEEoeQaf6" class="btn btn-white btn-round btn-disable">
                 <i class="fas fa-hand-pointer"></i> Click Here
                 </a>
                 
@@ -468,13 +471,12 @@ MAIN
                 </button>
                 
                <?php } ?>
-                
             </div>
         </div>
     </div>
   </div> 
 
-   <div class="modal fade" id="allotmentModal">
+  <div class="modal fade" id="allotmentModal">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
       
@@ -489,7 +491,15 @@ MAIN
         <!-- Modal body -->
         <div class="modal-body">
           <!-- <h5 align="center"> Allotment for <?php echo $campus; ?> Hostel IIUI closed</h5> -->
-          <h4 style="color: #F30;" class="no_blink" align="center">Call of applications for the allotment of hostel seats will be open at <br><br>Friday November 17, 2023 @ 9:30 AM <br>till<br> Friday November 24, 2023 @ 3:00 PM</h4>
+          <h4 style="color: #F30;" class="blink" align="center">Allotment of Hostel Seat is closed! </h4>
+
+          <!-- <p>Provost Office is initiating online process of Hostel seat allotment for the programs of <strong>BS, MS & PhD Level Students admitted in Spring 2023 and Fall 2023. </strong></p>
+
+          <p><strong>MS and Ph.D of Spring 2024 can also apply for Allotment</strong></p> -->
+
+      <!--   <p>Due to a shortage of hostel seats, initially Common Room seats will be available for Fall 2023 BS students. Allotment is subject to <strong><u><i>"first come first serve" </i></u></strong>on available hostel seats only. </p>
+
+        <p>Students mentioned in above batches are informed to apply for Hostel seat through online link mentioned below that will be available from <strong>Thursday, May 16, 2024 at 09:30 a.m. to Friday, May 31st, 2024 3:00 p.m.</strong></p> -->
           <p>For more information and latest update please visit <a href="<?php echo base_url() ?>maleNotifications">Here</a></p>
         </div>
         

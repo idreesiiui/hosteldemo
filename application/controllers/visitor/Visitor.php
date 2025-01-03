@@ -278,7 +278,25 @@ class Visitor extends BaseController
 				if($Visitorexisted == true)
 					{ 
 						
-						$visitorInfo = array('REGNO'=>$regno,'STUDENTNAME'=>$studentname,'HOSTELID'=>$hostelno,'SEATID'=>$seatno, 'ROOMID'=>$roomno, 'VISTOR_NO'=>$vno, 'VNAME'=>$visitname,'RELATION'=>$relation, 'VNICNO'=>$cnic, 'CONTACTNO'=>$number, 'VNAME2'=>$visitname2,'RELATION2'=>$relation2, 'VNICNO2'=>$cnic2, 'CONTACTNO2'=>$number2, 'GENDER'=> $gender, 'VREMARKS'=> $remark , 'VADDRESS'=> $address);
+						$visitorInfo = array(
+							'REGNO'=>$regno,
+							'STUDENTNAME'=>$studentname,
+							'HOSTELID'=>$hostelno,
+							'SEATID'=>$seatno, 
+							'ROOMID'=>$roomno, 
+							'VISTOR_NO'=>$vno, 
+							'VNAME'=>$visitname,
+							'RELATION'=>$relation, 
+							'VNICNO'=>$cnic, 
+							'CONTACTNO'=>$number, 
+							'VNAME2'=>$visitname2,
+							'RELATION2'=>$relation2, 
+							'VNICNO2'=>$cnic2, 
+							'CONTACTNO2'=>$number2, 
+							'GENDER'=> $gender, 
+							'VREMARKS'=> $remark, 
+							'VADDRESS'=> $address
+						);
 						
 						$result = $this->visitor_model->UpdateVisitors($visitorInfo, $regno);
 						
@@ -294,7 +312,25 @@ class Visitor extends BaseController
 		else
 			{
                 
-            $visitorInfo = array('REGNO'=>$regno,'STUDENTNAME'=>$studentname,'HOSTELID'=>$hostelno,'SEATID'=>$seatno, 'ROOMID'=>$roomno, 'VISTOR_NO'=>$vno, 'VNAME'=>$visitname,'RELATION'=>$relation, 'VNICNO'=>$cnic, 'CONTACTNO'=>$number, 'VNAME2'=>$visitname2,'RELATION2'=>$relation2, 'VNICNO2'=>$cnic2, 'CONTACTNO2'=>$number2, 'GENDER'=> $gender, 'VREMARKS'=> $remark , 'VADDRESS'=> $address);
+            $visitorInfo = array(
+            	'REGNO'=>$regno,
+            	'STUDENTNAME'=>$studentname,
+            	'HOSTELID'=>$hostelno,
+            	'SEATID'=>$seatno, 
+            	'ROOMID'=>$roomno, 
+            	'VISTOR_NO'=>$vno, 
+            	'VNAME'=>$visitname,
+            	'RELATION'=>$relation, 
+            	'VNICNO'=>$cnic, 
+            	'CONTACTNO'=>$number, 
+            	'VNAME2'=>$visitname2,
+            	'RELATION2'=>$relation2, 
+            	'VNICNO2'=>$cnic2, 
+            	'CONTACTNO2'=>$number2, 
+            	'GENDER'=> $gender, 
+            	'VREMARKS'=> $remark , 
+            	'VADDRESS'=> $address
+            );
                 
              
 				$result = $this->visitor_model->addNewVisitor($visitorInfo);

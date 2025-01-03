@@ -164,7 +164,7 @@ Once again, I welcome all of you and wish you a happy and successful time at the
                     }
                ?>
 			  <p class="bg-success text-white text-center">Female Campus</p>              
-              <h6> Registration for <b>(ALL Students)</b><?php echo "<b>".$semestercode[0]->SEMESTEROPENREG."</b>"; ?></h6>
+              <h6> Registration for <b>(All)</b><?php echo "<b>".$semestercode[0]->SEMESTEROPENREG."</b>"; ?></h6>
               <div style="display:none"><span style="color:grey; font-size:12px; margin-left:-190px">(First Come Fisrt Serve Basis)</span></div>
               <h3 style="color: #388F3A;" class="blink" align="center">Registration Open</h3>
               <span style="color:red">Registration open on <?php echo $startDay.','.$regstartdate.' at '.$regstarttime.' and will be closed on '.$endday.' '.$regenddate.' at '.$regendtime?>. For more Information <a href="<?php echo base_url() ?>/form/femaleNotifications" target="_blank">Click here</a> </span>

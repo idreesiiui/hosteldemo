@@ -48,7 +48,10 @@
                     </a>
                     <a class="btn btn-app" href="<?php echo base_url() ?>feechallan/NewFeechallan/updateChallanAndFee">
                         <i class="fa fa-edit"></i>Update Challan & Fee 
-                    </a>                          
+                    </a>
+                    <a class="btn btn-app" href="<?php echo base_url('search_std_info'); ?>">
+                        <i class="fa fa-edit"></i>Update Student Info 
+                    </a> 
                 </div>
             </div>
              <div class="col-md-5">

@@ -108,7 +108,18 @@
                     ?>
                     
                   </select>
-                  </div>                                
+                  </div>  
+                  <label for="semester" style="width:80px" for="text" class="col-sm-2 control-label">Select Allotment Type</label>
+                  <div class="col-sm-2">
+                    <select class="form-control" name="ALLOTTYPE" id="ALLOTTYPE" required>
+                    <option value="All">All</option>
+                    
+                    `<option value="Allotment">Allotment</option>
+                    `<option value="REALLOTMENT">ReAllotment</option>
+                           
+                    
+                  </select>
+                  </div>                               
                 </div>
                 <br>
               <div class="row>">

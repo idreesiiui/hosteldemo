@@ -10,7 +10,7 @@ class Importdata_model extends CI_Model
     function find($table,$where){
         $query = $this->otherdb->where( $where )->get($table);
         return $query->num_rows();
-    } 
+    }
 
     function updateData($where,$table,$data)
     {
@@ -66,56 +66,6 @@ class Importdata_model extends CI_Model
         return $this->otherdb->insert_id();        
         
     }
-
-
- function index()
- {
-  $this->load->view('excel_import');
- }
- 
- function fetch()
- {
-  $data = $this->excel_import_model->select();
-  $output = '
-  <h3 align="center">Total Data - '.$data->num_rows().'</h3>
-  <table class="table table-striped table-bordered">
-   <tr>
-    <th>Customer Name</th>
-    <th>Address</th>
-    <th>City</th>
-    <th>Postal Code</th>
-    <th>Country</th>
-   </tr>
-  ';
-  foreach($data->result() as $row)
-  {
-   $output .= '
-   <tr>
-    <td>'.$row->CustomerName.'</td>
-    <td>'.$row->Address.'</td>
-    <td>'.$row->City.'</td>
-    <td>'.$row->PostalCode.'</td>
-    <td>'.$row->Country.'</td>
-   </tr>
-   ';
-  }
-  $output .= '</table>';
-  echo $output;
- }
-
- function import()
- {
-      
-       
-       
- }
-
 	
 }
-
-
-
-
-
-
 ?>  

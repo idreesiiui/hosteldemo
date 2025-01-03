@@ -224,11 +224,13 @@ class Allotment_model extends CI_Model
      function viewallotmentInfo($gender,$hostelno,$roomno)
     {
 
-    	$this->otherdb->select('TBL_ALLOTMENT.*,TBL_SEAT.SEAT,TBL_SEAT.OCCUPIED,TBL_HOSTEL.HOSTEL_NO,TBL_ROOM.ROOMDESC,TBL_ROOM.ROOMTYPE')
+    	$this->otherdb->select('TBL_ALLOTMENT.*,TBL_SEAT.SEAT,TBL_SEAT.OCCUPIED,TBL_HOSTEL.HOSTEL_NO,TBL_ROOM.ROOMDESC,TBL_ROOM.ROOMTYPE,TBL_USERS.email')
 		    ->from('TBL_ALLOTMENT')
 			->join('TBL_SEAT', 'TBL_SEAT.SEATID = TBL_ALLOTMENT.SEATID','INNER')
 			->join('TBL_HOSTEL', 'TBL_HOSTEL.HOSTELID = TBL_ALLOTMENT.HOSTELID','INNER')
-			->join('TBL_ROOM', 'TBL_ROOM.ROOMID = TBL_ALLOTMENT.ROOMID','INNER');
+			->join('TBL_ROOM', 'TBL_ROOM.ROOMID = TBL_ALLOTMENT.ROOMID','INNER')
+			->join('TBL_USERS', 'TBL_USERS.userId = TBL_ALLOTMENT.EMAILID','INNER');
+			
 
 		if(!empty($gender)){
 			$this->otherdb->where('TBL_ALLOTMENT.GENDER',$gender);			

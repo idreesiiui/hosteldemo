@@ -43,6 +43,35 @@ class Seat extends BaseController
         $this->loadViews("seat/view", $this->global, $data, NULL);
         
     }
+
+    public function makeSeatVacant(){
+    	//get all vacant seats
+    	$gender = 'Male';     	
+
+    	$seats = $this->seat_model->getAllSeats($gender);
+
+    	foreach($seats as $seat){
+    		
+    		$status = $this->seat_model->getseatstatus($seat->SEATID, $gender);
+
+	    	var_dump($status);
+	    	if(empty($status)){
+	    		echo "Seat Vacant ".$seat->SEATID." Seat Type: ".$seat->SEAT;
+	    	}
+
+	    	$seatInfo = array(
+	    		'OCCUPIED' => 0
+	    	);
+
+	    	//$status = $this->seat_model->editSeat($seatInfo,$seat->SEATID);
+    	
+
+    	}
+
+
+
+    	
+    }
 	
 	function viewvacantSeatByHostel()
     {	
@@ -219,6 +248,7 @@ class Seat extends BaseController
             $seatdesc = $this->input->post('seatdesc');
             $seatoccupy = $this->input->post('seatoccupy');
             $seatId = $this->input->post('seatId');
+            $CAPTUREBY = $this->input->post('CAPTUREBY');
 		    $seat = $this->input->post('seat');			
 		
 			$userId = $this->vendorId;
@@ -232,7 +262,9 @@ class Seat extends BaseController
 				'GENDER'=>$gender, 
 				'OCCUPIED'=> $seatoccupy, 
 				'SEAT'=>$seat, 
-				'updated_by'=>$userId);
+				'updated_by'=>$userId,
+				'CAPTUREBY'=>$CAPTUREBY??null
+			);
             
              $result = $this->seat_model->editSeat($seatInfo,$seatId);
 		

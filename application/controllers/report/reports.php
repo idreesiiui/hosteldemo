@@ -1292,6 +1292,7 @@ Congratulations! You Application have been Approved for Hostel New Seat Allotmen
 			$nationality = $this->input->post('nationality');
 			$faculty = $this->input->post('faculty');
 			$dept = $this->input->post('dept');
+			$ALLOTTYPE = $this->input->post('ALLOTTYPE');
 			if($faculty != 'All')
 			{
 			   $facname = $this->report_model->getfacname($faculty);	
@@ -1305,7 +1306,7 @@ Congratulations! You Application have been Approved for Hostel New Seat Allotmen
 			
 			
 			
-			$val = $this->report_model->getBorderListAll($semester,$gender,$hostel,$faculty,$dept, $nationality, $programe);
+			$val = $this->report_model->getBorderListAll($semester,$gender,$hostel,$faculty,$dept, $nationality, $programe,$ALLOTTYPE);
 			
 			$batch = array();
 			
@@ -1319,7 +1320,7 @@ Congratulations! You Application have been Approved for Hostel New Seat Allotmen
 			//print_r(count($batch));exit();
 			$data['batchname'] = $batch;
 			
-			$data['studentInfo'] = $this->report_model->getBorderListAll($semester,$gender,$hostel,$faculty,$dept, $nationality, $programe);
+			$data['studentInfo'] = $this->report_model->getBorderListAll($semester,$gender,$hostel,$faculty,$dept, $nationality, $programe,$ALLOTTYPE);
 			
 			$this->global['pageTitle'] = 'IIUI Hostels : Get Hostel Border list Detail';
         

@@ -123,7 +123,7 @@
                                  <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="address">Father Number</label>
-                                       <input type="number" class="form-control" id="number"  name="number" maxlength="11" value="<?php if(!empty($visitorinfo[0]->CONTACTNO)) echo $visitorinfo[0]->CONTACTNO; else echo $fnumber[0]->FATHERNUMBER; ?>" > 
+                                       <input type="number" class="form-control" id="number"  name="number" maxlength="15" value="<?php if(!empty($visitorinfo[0]->CONTACTNO)) echo $visitorinfo[0]->CONTACTNO; else echo $fnumber[0]->FATHERNUMBER; ?>" > 
                                     </div>
                                 </div>
                                  <div class="col-md-2">                                
@@ -163,7 +163,7 @@
                                  <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="address">Contact No</label>
-                                       <input type="number" class="form-control" id="number2"  name="number2" maxlength="11" value="<?php if(!empty($visitorinfo[0]->CONTACTNO2)) echo $visitorinfo[0]->CONTACTNO2; else echo $fnumber[0]->EPERSONNUMBER; ?>" > 
+                                       <input type="text" class="form-control" id="number2"  name="number2" maxlength="15" value="<?php if(!empty($visitorinfo[0]->CONTACTNO2)) echo $visitorinfo[0]->CONTACTNO2; else echo $fnumber[0]->EPERSONNUMBER; ?>" > 
                                        <input type="hidden" class="form-control" id="allottype"  name="allottype" value="<?php echo $studentinfo[0]->ALLOTTYPE ?>" > 
                                     </div>
                                 </div>

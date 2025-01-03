@@ -215,8 +215,8 @@
                                 </div>
                                  <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="occupy">Faculty<?php //var_dump($gender); ?></label>
-                                        <?php if($gender === 'Female'){ ?>   
+                                        <label for="occupy">Faculty</label>
+                                         <?php if($gender === 'Female'){ ?>   
                                         <select class="form-control valid" name="faculty" id="faculty" required="" aria-required="true" aria-invalid="false">
                                             <option value="">Select Faculty</option>
                                             <option value="Arabic">Arabic</option>      

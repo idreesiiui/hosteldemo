@@ -137,7 +137,7 @@ class Signup_model extends CI_Model
                 $otherdb->where('REGNO', $regno);               
                 $query = $otherdb->get();
                 $result = $query->result();            
-        }         
+        }        
         return $result;
     }
 	
@@ -153,7 +153,7 @@ class Signup_model extends CI_Model
                 $otherdb->select('*');
                 $otherdb->from('students');
                 //$otherdb->where('IS_ACTIVE', 1);
-                $otherdb->where('REGNO', $regno);                
+                $otherdb->where('REGNO', $regno);               
                 $query = $otherdb->get();
                 $result = $query->result();            
         }         
@@ -167,7 +167,7 @@ class Signup_model extends CI_Model
 		$this->db->where('REGNO', $regno);
 		$this->db->where('GENDER', 'F');
         $query = $this->db->get();
-        $result = $query->result(); 
+        $result = $query->result();        
         if(empty($result)){
                 $otherdb = $this->load->database('otherdb', TRUE);
                 $otherdb->select('*');
@@ -177,8 +177,7 @@ class Signup_model extends CI_Model
                 $query = $otherdb->get();
                 $result = $query->result();            
         }         
-        return $result;     
-        
+        return $result; 
     }
 	
 	function getstudentgenderbyMale($regno)
@@ -188,17 +187,16 @@ class Signup_model extends CI_Model
 		$this->db->where('REGNO', $regno);
 		$this->db->where('GENDER', 'M');
         $query = $this->db->get();
-        $result = $query->result(); 
+        $result = $query->result();
         if(empty($result)){
-            $otherdb = $this->load->database('otherdb', TRUE);
-            $otherdb->select('*');
-            $otherdb->from('students');
-            //$otherdb->where('IS_ACTIVE', 1);
-            $otherdb->where('GENDER', 'Male');
-            $query = $otherdb->get();
-            $result = $query->result();
-            
-        }        
+                $otherdb = $this->load->database('otherdb', TRUE);
+                $otherdb->select('*');
+                $otherdb->from('students');
+                $otherdb->where('GENDER', 'Male');
+                $otherdb->where('REGNO', $regno);               
+                $query = $otherdb->get();
+                $result = $query->result();            
+        }         
         return $result;
     }
 	
@@ -265,31 +263,6 @@ class Signup_model extends CI_Model
 			return $result;
 			
 		}
-
-		function checkstdreg($regno)
-	    {
-			$this->db->select('REGNO,GENDER');
-			$this->db->from('TBL_HSTUDENTS');
-			$this->db->where('REGNO', $regno);
-			$query = $this->db->get();
-			$result = $query->result();
-
-			if(empty($result)){
-
-				$otherdb = $this->load->database('otherdb', TRUE);
-				$otherdb->select('*');
-				$otherdb->from('students');
-				//$otherdb->where('IS_ACTIVE', 1);
-				//$otherdb->where('gender', 'Male');
-				$otherdb->where('REGNO', $regno);
-				$query = $otherdb->get();
-				$result = $query->result();
-			
-			}        
-			//var_dump($result); exit();
-			return $result;
-			
-		}
 		
 		function checkreg($regno)
 	    {
@@ -298,7 +271,6 @@ class Signup_model extends CI_Model
 			$this->db->where('REGNO', $regno);
 			$query = $this->db->get();
 			$result = $query->result();
-
 			if(empty($result)){
 
 				$otherdb = $this->load->database('otherdb', TRUE);
@@ -310,8 +282,7 @@ class Signup_model extends CI_Model
 				$query = $otherdb->get();
 				$result = $query->result();
 			
-			}        
-			//var_dump($result); exit();
+			}         
 			return $result;
 			
 		}
@@ -391,10 +362,10 @@ class Signup_model extends CI_Model
 		$otherdb->where('REGNO', $regno);
 		$otherdb->where('GENDER', $gender);
 		
-        $query = $otherdb->get();
-        $result = $query->result();        
+        return $otherdb->get()->result();
+        //$result = $query->result();        
         
-		return $result;
+		//return $result;
 			
 		}
 		
@@ -428,7 +399,8 @@ class Signup_model extends CI_Model
 				$query = $otherdb->get();
 				$result = $query->result();
 			}      
-			return $result;
+			return $result;      
+			
 		}
 	
 	/**

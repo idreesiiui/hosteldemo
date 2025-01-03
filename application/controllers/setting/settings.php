@@ -1,5 +1,9 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+ini_set('memory_limit', '-1');
+error_reporting(E_ALL);
 
 require APPPATH . '/libraries/BaseController.php';
 
@@ -37,7 +41,7 @@ class Settings extends BaseController
 		$data['userSettings'] = $this->setting_model->GetSetting();
         
         $this->loadViews("setting/getsetting", $this->global, $data, NULL);
-    }
+    }    
 	
 	 public function allotbatch()
     {
@@ -546,7 +550,6 @@ class Settings extends BaseController
 		   
 		   foreach($allallotments as $record)
 		   {
-		   		
 				$allotid = $seatstatus = $record->SEATSTATUS;
 				$regno = $record->REGNO; 
 				$studentname = $record->STUDENTNAME; 
@@ -659,7 +662,6 @@ class Settings extends BaseController
 				/** Update Regno of student in user table **/
 				
 				    //$this->setting_model->UpdateUserInfo($userInfo, $emailid);
-				$this->setting_model->DeleteAllRecordAllot($gender,$regno);
 					
 			}
 
@@ -675,7 +677,6 @@ class Settings extends BaseController
 			);
 				
 			$insertmigrate = $this->setting_model->Insertmigrate($semInfo);
-			
 		}
 				
 		if(!empty($migrate[0]->SEMCODE) && isset($migrate[0]->SEMCODE)){
@@ -683,10 +684,10 @@ class Settings extends BaseController
 					redirect('setting/settings/');
 		}
 		        
-        			
+        			$this->setting_model->DeleteAllRecordAllot($gender);
 					
-		$this->session->set_flashdata('success', 'All Allotment Data Shifted to AllotReallot for Current Semester');
-		redirect('setting/settings/');
+					$this->session->set_flashdata('success', 'All Allotment Data Shifted to AllotReallot for Current Semester');
+					redirect('setting/settings/');
     }
 	
 	public function migrationofReallot()
@@ -821,7 +822,7 @@ class Settings extends BaseController
 					//$default = $this->reallotment_model->InsertReAllotment($userInfo);
 
 					$default = $this->setting_model->InsertAllotReallot($userInfo);
-					$this->setting_model->DeleteAllRecordReallot($gender,$regno);
+					
 					$userInfo = array('regno'=>$regno);
 				
 				/** Update Regno of student in user table **/
@@ -841,7 +842,7 @@ class Settings extends BaseController
 		      	$this->session->set_flashdata('error', 'All RE-Allotment Data already Shifted to AllotReallot for Current Semester');
 					redirect('setting/settings/');
 		}
-		        	
+		        	$this->setting_model->DeleteAllRecordReallot($gender);
         			
 					$this->session->set_flashdata('success', 'All RE-Allotment Data Shifted to AllotReallot for Current Semester');
 					redirect('setting/settings/');
@@ -1329,7 +1330,7 @@ class Settings extends BaseController
 			$type = $this->input->post('type');
 			$desc = $this->input->post('desc');
 			$pubdate = $this->input->post('pubdate');
-			$image = $type.'-'.date('dmyh');
+			$image = $type.'-'.date('dmyhis');
 			$status = 1;
 			
 			if($type == 'Notification' && $gender == 'Male'){
@@ -1349,7 +1350,7 @@ class Settings extends BaseController
 			'upload_path' => $path,
 			'allowed_types' => "gif|jpg|png|jpeg|JPEG|JPG|PNG|GIF|pdf",
 			'overwrite' => TRUE,
-			'max_size' => "2048",
+			'max_size' => "10240",
 			'max_height' => "1200",
 			'max_width' => "1500",
 			'file_name' => $image

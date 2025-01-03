@@ -22,6 +22,46 @@ class Feechallan_model extends CI_Model
 					->get()
 					->result();
 	}
+
+	function getPrincepleAmount($studregno,$challanno){
+
+		$challan_detail = $this->otherdb->where('regno',$studregno)
+						->where('challanno',$challanno)
+						->get('tbl_newpaychallan')
+						->result();
+		$month = $challan_detail[0]->month;
+		$fee_structure_id = $challan_detail[0]->fee_structure_id;
+		$extension = $challan_detail[0]->extension;
+
+		$challan_heads = $this->otherdb->where('new_fee_structure_id',$fee_structure_id)
+						->where('status',1)
+						->get('tbl_feestructurehead')
+						->result();
+		$total_head_amount = 0;
+
+		foreach($challan_heads as $head){
+			if($head->head_code == 100){
+				$total_head_amount += ($head->amount * $month);
+			} else if($head->head_code == 101 || $head->head_code == 102 || $head->head_code == 1023 || $head->head_code == 111) {
+				$total_head_amount += $head->amount;
+			}
+		}
+
+		if($extension == '1st Extension Fee'){
+			$total_head_amount += 000 * $month;
+		}else if($extension == '2nd Extension Fee'){
+			$total_head_amount += 1000 * $month;
+		}else if($extension == '3rd Extension Fee'){
+			$total_head_amount += 2000 * $month;
+		}else if($extension == '4th Extension Fee'){
+			$total_head_amount += 2000 * $month;
+		}else if($extension == '5th Extension Fee'){
+			$total_head_amount += 2000 * $month;
+		}
+
+		return $total_head_amount;
+		
+	}
 	
 	function HostelFeeDetailByHR($semester)
     {
@@ -2826,7 +2866,6 @@ class Feechallan_model extends CI_Model
 						->where('REGNO', $regno)
 						->get('TBL_HSTUDENTS')
 						->row();
-
 		if(empty($result)){
 				$otherdb = $this->load->database('otherdb', TRUE);
 				$otherdb->select('*');
@@ -2836,8 +2875,7 @@ class Feechallan_model extends CI_Model
 				$query = $otherdb->get();
 				$result = $query->result();
 			}      
-		//var_dump($result); exit();
-			return $result;  		
+			return $result;		
 	}
 	
 	function GetHistoryBatch($studregno, $structsemcode)
@@ -3018,7 +3056,7 @@ class Feechallan_model extends CI_Model
 	function GetStudAllotmentregnoInfo($studpostregno, $gender)
     {
         if($gender == 'Male'){
-			$result = $this->otherdb->select('tbl_maleapplication.REGNO as regno')
+			return $this->otherdb->select('tbl_maleapplication.REGNO as regno')
 						->where('tbl_maleapplication.REGNO', $studpostregno)
 						->where('tbl_maleapplication.GENDER', $gender)
 						->where('tbl_maleapplication.STATUS', 1)
@@ -3026,17 +3064,14 @@ class Feechallan_model extends CI_Model
 						->result();
 		}
 		elseif($gender == 'Female'){
-			$result = $this->otherdb->select('tbl_application.regno as regno')
+			return $this->otherdb->select('tbl_application.regno as regno')
 						->where('tbl_application.REGNO', $studpostregno)
 						->where('tbl_application.GENDER', $gender)
 						->where('tbl_application.STATUS', 1)
 						->get('tbl_application')
 						->result();
 		}
-		// var_dump($gender);
-		// var_dump($studpostregno);
-		// var_dump($result); exit();
-      return $result; 
+       
     }
 	
 	function CheckFeestatusRegno($regno, $gender, $csem, $feestructureid)
@@ -3144,7 +3179,6 @@ class Feechallan_model extends CI_Model
 			        ->where('REGNO', $studregno)
 			        ->get('TBL_HSTUDENTS')
 			        ->row();
-
 		if(empty($result)){
 				$otherdb = $this->load->database('otherdb', TRUE);
 				$otherdb->select('*');
@@ -3157,4 +3191,5 @@ class Feechallan_model extends CI_Model
 		//var_dump($result); exit();
 			return $result;
     }
-}  
+} 
+  

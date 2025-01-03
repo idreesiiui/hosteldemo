@@ -187,13 +187,12 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 			  $this->load->model('login_model');
 			  $CI =& get_instance();
 			  $studregno = $this->session->userdata('studregno');
-        //var_dump($studregno);
 			  $studpics = $CI->login_model->StudPic($studregno);
 			  if(!empty($studpics))
 			  $studpic = $studpics[0]->STUDPIC;
 			  if(empty($studpics)) { ?>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-                  <img src="<?php echo base_url(); ?>assets/dist/img/avatar_<?php echo $gender; ?>.png" class="user-image" alt="Student Image"/>
+                  <img src="<?php echo base_url(); ?>assets/dist/img/avatar_<?php echo $gender; ?>.png" class="user-image" alt="User Image"/>
                   <span class="hidden-xs"><?php echo preg_replace('/\d+/u', '',$name); ?></span>
                 </a>
                 <?php }
@@ -209,7 +208,7 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                   <!-- User image -->
                    <?php if(empty($studpic)) { ?>
                   <li class="user-header" style="background-color:#44c553;color:#fff;">
-                    <img src="<?php echo base_url(); ?>assets/dist/img/avatar_<?php echo $gender; ?>.png" class="img-circle" alt="Student Image" />
+                    <img src="<?php echo base_url(); ?>assets/dist/img/avatar_<?php echo $gender; ?>.png" class="img-circle" alt="User Image" />
                     <p>
                       <?php echo $name; ?>
                       <small><?php echo $role_text; ?></small>
@@ -338,12 +337,7 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                 <span style="color:#FFF;">Visitor</span>
               </a>
             </li>
-            <!-- <li class="treeview">
-              <a href="<?php //echo base_url();?>feechallan/Feechallan/viewfeeDetail">
-                <i class="fa fa-file-pdf-o icon-green"></i>
-                <span style="color:#FFF;">Fee Challan</span>
-              </a>
-            </li> -->
+            
              <li class="treeview">
               <a href="<?php echo base_url();?>semester/semester/viewsemesterDetail">
                 <i class="fa fa-circle icon-green"></i>
@@ -412,6 +406,12 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                 <span style="color:#FFF;">Users</span>
               </a>
             </li>
+             <li class="treeview">
+              <a href="<?= base_url();?>api/sendsms">
+                <i class="fa fa-file-pdf-o icon-green"></i>
+                <span style="color:#FFF;">Send Messages</span>
+              </a>
+            </li>
            
             <?php 
 			}
@@ -435,11 +435,11 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 
        <?php }
 		
-        if($role == ROLE_STUDENT && (isset($feestatus) && $feestatus == 'HOSTEL RENEWAL FEE') || !isset($feestatus))
-        {
-    			if($feestatus == 'HOSTEL RENEWAL FEE'){
-    				$feestatus = 'RENEWALHOSTELFEE';
-    			}
+            if($role == ROLE_STUDENT && (isset($feestatus) && $feestatus == 'HOSTEL RENEWAL FEE') || !isset($feestatus))
+            {
+				if($feestatus == 'HOSTEL RENEWAL FEE'){
+					$feestatus = 'RENEWALHOSTELFEE';
+				}
             ?>
             <li class="treeview">
               <a href="<?php echo base_url(); ?>reallotment/reAllotment/studentreallotapply">
@@ -466,15 +466,15 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                 <span style="color:#FFF;">Seat Change/Interchange</span>
               </a>
             </li>
-            <!-- <li class="treeview">
-              <a href="<?php //echo base_url();?>assets/images/AVAILABLE_SEATS_FOR_SEAT_CHANGE_SPRING_2023.pdf" target="_blank" rel="noopener noreferrer">
+            <li class="treeview">
+            <a href="http://usis.iiu.edu.pk:64453/hostel/uploads/notifications/female/notifications/Notification-22042412" target="_blank" rel="noopener noreferrer">Available Seats For Seat Change</a>
+            </li>
+           <!--  <li class="treeview">
+              <a href="<?php //echo base_url();?>assets/images/AVAILABLE_SEATS_FOR_SEAT_CHANGE_SPRING_2024.pdf" target="_blank" rel="noopener noreferrer">
                 <i class="fa fa-upload icon-green"></i>
                 <span style="color:#FFF;">Available Seats For Seat Change</span>
               </a>
             </li> -->
-            <li class="treeview">
-            <a href="http://usis.iiu.edu.pk:64453/hostel/uploads/notifications/female/notifications/Notification-22042412" target="_blank" rel="noopener noreferrer">Available Seats For Seat Change</a>
-            </li>
             <?php
             }
 			elseif($role == ROLE_STUDENT || (isset($feestatus) && $feestatus == 'NEW HOSTEL FEE'))

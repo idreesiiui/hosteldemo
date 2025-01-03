@@ -48,6 +48,8 @@
 
 <?php
 
+//var_dump($viewcardsInfo); exit();
+
 $name = $viewcardsInfo[0]->NAME;
 
 $nameLenght = strlen($name);
@@ -75,7 +77,7 @@ if($nameLenght >= '20' && $nameLenght <= '31'){
 //$fname = str_replace("Hussain","H",$fname);
 //$fname = str_replace("Sardar","S",$fname);
 
-$fname = $fname[0]->FATHERNAME;
+$fname = $viewcardsInfo[0]->FATHERNAME;
 
 $nameLenght = strlen($fname);
 
@@ -194,7 +196,8 @@ if($nameLenght >= '17' && $nameLenght <= '19'){
 <span class="card_title_field" style="top:59pt;">Father's Name:    </span>
 <span class="card_field_value" style="top:59pt;left:80pt; font-size: <?= $fontSize; ?>"><?= $fname; ?></span>
 
-<input type="hidden" name="father_name" value="<?php echo strlen($fname); ?>">
+<input type="hidden" name="father_name_length" value="<?php echo strlen($fname); ?>">
+<input type="hidden" name="father_name" value="<?php echo $fname[0]->FATHERNAME; ?>">
 
 <span class="card_title_field" style="top:73pt;">Reg No:</span>
 <span class="card_field_value" style="top:73pt;left:48pt;"><?php echo $viewcardsInfo[0]->REGNO?></span>
@@ -204,11 +207,43 @@ if($nameLenght >= '17' && $nameLenght <= '19'){
 <span class="card_field_value" style="top:60pt;left:184.5pt; width:58.5pt;height:58.5pt; ">
 <?php if(!empty($viewcardsInfo[0]->ID) && !empty($oraclepic)){ 
 
-	$blobimg = $oraclepic[0]->STUDPIC;?>
+	$blobimg = $oraclepic[0]->STUDPIC;
 
-<?php echo '<img src ="data:image/jpeg;base64,'.base64_encode($blobimg).'" style="margin-left: 18%;margin-top: 7px;" width=70 height=70 border=0/>';?>
+   // var_dump($blobimg);
+   
+
+
+    $blobimg = $oraclepic[0]->STUDPIC;
+                     $STD_PIC = $oraclepic[0]->STD_PIC; 
+
+                    // var_dump($blobimg); exit(); 
+
+                    $imageData = base64_decode($blobimg);
+
+                           $image_name = str_replace("/", "", $viewcardsInfo[0]->REGNO);
+                     //var_dump($image_name);
+
+                            // Specify the path where you want to save the image
+                            $filePath = 'assets/student_pics/'.trim($image_name).'.png';
+
+                            // Write the binary data to the file
+
+                            if(!empty($oraclepic[0]->STUDPIC)){
+
+                                   file_put_contents($filePath, $imageData);
+                            }
+
+                           if(empty($STD_PIC)){
+                            
+                            ?>
+                            <img width=70 height=70 border=0 style="margin-left: 18%;margin-top: 7px;" alt="student picture" src ="http://usis.iiu.edu.pk:64453/hostel/assets/student_pics/<?= $image_name ?>.png"/>
+                     <?php } else { ?>
+
+                            <?php echo '<img src ="data:image/jpeg;base64,'.base64_encode($blobimg).'" style="margin-left: 18%;margin-top: 7px;" width=70 height=70 border=0/>';?> 
+
+
                  
-<?php } else {?>
+<?php }} else {?>
 
 <img src="<?php echo base_url()?>uploads/image/noimg.png" id="pic1" src="#" alt="Provost Signature" class="img-thumb" width="70" height="70" style="padding:1px; border:1px solid #021a40;" >
  <?php }?> </span>

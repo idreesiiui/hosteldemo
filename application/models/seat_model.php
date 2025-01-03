@@ -38,8 +38,72 @@ class Seat_model extends CI_Model
         
         return $query->result();
     }
+
+    public function getAllSeats($gender){
+    	$otherdb = $this->load->database('otherdb', TRUE);
+		$otherdb->select('TBL_SEAT.*,TBL_HOSTEL.HOSTEL_NO,TBL_HOSTEL.HOSTELDESC,TBL_ROOM.ROOMDESC');
+		$otherdb->from('TBL_SEAT');
+		$otherdb->join('TBL_HOSTEL', 'TBL_HOSTEL.HOSTELID = TBL_SEAT.HOSTELID','INNER');
+		$otherdb->join('TBL_ROOM', 'TBL_ROOM.ROOMID = TBL_SEAT.ROOMID','INNER');
+		$otherdb->where('TBL_SEAT.OCCUPIED', 1);
+		$otherdb->where_in('TBL_HOSTEL.HOSTELID', array(13,14,15,16,17,18,19,20,21,22,23,24));
+
+		$otherdb->where('TBL_HOSTEL.GENDER', $gender);
+		$otherdb->order_by('TBL_ROOM.ROOMDESC', 'asc');
+		$query = $otherdb->get();
+		
+		return $query->result();
+    }
+
+    function getseatstatus($SEATID, $gender)
+    {
+		$otherdb = $this->load->database('otherdb', TRUE);
+		
+        $otherdb->select('REGNO, STUDENTNAME');
+        $otherdb->from('TBL_ALLOTMENT');
+		$otherdb->where('SEATID',$SEATID);
+		$otherdb->where('GENDER',$gender);
+		$otherdb->where('ADMIN_VERIFY !=',2);
+        $query =  $otherdb->get();
+        
+        $result = $query->result();
+		
+		if(empty($result))
+		   {
+			    $otherdb->select('REGNO, STUDENTNAME');
+				$otherdb->from('TBL_REALLOTMENT');
+				$otherdb->where('SEATID',$SEATID);
+				$otherdb->where('GENDER',$gender);
+				$otherdb->where('ADMIN_VERIFY !=',2);
+				$query =  $otherdb->get();
+				
+				$result = $query->result();
+				return $result;
+		   }
+		 elseif(empty($result))
+		   {
+			    $otherdb->select('REGNO, STUDENTNAME');
+				$otherdb->from('TBL_ALLOTREALLOT');
+				$otherdb->where('SEATID',$SEATID);
+				$otherdb->where('GENDER',$gender);
+				$otherdb->where('ADMIN_VERIFY !=',2);
+				$query =  $otherdb->get();
+				
+				$result = $query->result();
+				return $result;
+		   }
+		 else{
+			   return $result;
+		 }
+    }
+
+    // public function SeatAccupiedByAllotOrRealot($seatId, $hostelID){
+
+    // }
+
+
 	
-	 function viewvacantSeat($gender, $hostelno)
+	function viewvacantSeat($gender, $hostelno)
     {
         if($hostelno == 'All')
 		{
@@ -245,47 +309,7 @@ class Seat_model extends CI_Model
 			}
     }
 	
-	function getseatstatus($SEATID, $gender)
-    {
-		$otherdb = $this->load->database('otherdb', TRUE);
-		
-        $otherdb->select('REGNO, STUDENTNAME');
-        $otherdb->from('TBL_ALLOTMENT');
-		$otherdb->where('SEATID',$SEATID);
-		$otherdb->where('GENDER',$gender);
-		$otherdb->where('ADMIN_VERIFY !=',2);
-        $query =  $otherdb->get();
-        
-        $result = $query->result();
-		
-		if(empty($result))
-		   {
-			    $otherdb->select('REGNO, STUDENTNAME');
-				$otherdb->from('TBL_REALLOTMENT');
-				$otherdb->where('SEATID',$SEATID);
-				$otherdb->where('GENDER',$gender);
-				$otherdb->where('ADMIN_VERIFY !=',2);
-				$query =  $otherdb->get();
-				
-				$result = $query->result();
-				return $result;
-		   }
-		 elseif(empty($result))
-		   {
-			    $otherdb->select('REGNO, STUDENTNAME');
-				$otherdb->from('TBL_ALLOTREALLOT');
-				$otherdb->where('SEATID',$SEATID);
-				$otherdb->where('GENDER',$gender);
-				$otherdb->where('ADMIN_VERIFY !=',2);
-				$query =  $otherdb->get();
-				
-				$result = $query->result();
-				return $result;
-		   }
-		 else{
-			   return $result;
-		 }
-    }
+	
 	
 	function getSeatInfobyId($SEATID, $gender)
     {

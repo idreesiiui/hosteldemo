@@ -3,7 +3,7 @@
     <section class="content-header">
       <h1>
         Students Search
-        <small>Student Search Info</small>
+        <small>Student Search Info:</small>
       </h1>
       <div class="col-md-4 pull-right">
                 <?php

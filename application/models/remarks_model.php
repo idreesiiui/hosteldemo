@@ -31,10 +31,7 @@ class remarks_model extends CI_Model
         
     }
 
-    public function findRemarks($regno){
-        // return $this->otherdb->where('REGNO',$regno)
-        // ->get('student_remarks')
-        // ->result();
+    public function findRemarks($regno){      
 
         return $this->otherdb->select('student_remarks.*,tbl_users.name as remarked_by')
 					->from('student_remarks')

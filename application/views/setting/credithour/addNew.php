@@ -204,7 +204,14 @@
        										<option value="0">Disable</option>
                                         </select>
                                     </div>
-                                </div>    
+                                </div> 
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="hostelno">Semester:</label>
+                                         <input type="text"  class="form-control required" id="semcode" name="semcode" readonly required maxlength="12" value="<?php echo strtoupper($semestercode[0]->SEMCODE)?>">
+                                    </div>
+                                </div>   
+
                             </div>
                         </div><!-- /.box-body -->
     

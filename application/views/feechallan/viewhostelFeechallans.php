@@ -61,7 +61,7 @@
                       <th>Nationality</th>
                       <th>Challan No</th>
                       <th>Semester</th>
-                      <th>Fine</th>
+                      <th>Principal Amount<small>(Without fine)</small></th>
                       <th>Issue Date</th>
                       <th>Due Date</th>
                       <th>Status</th>
@@ -69,11 +69,17 @@
                     </tr>
               </thead>
                     <?php 
+
+                    $this->load->model('feechallan_model');
+                    $CI =& get_instance();
+
                     if(!empty($viewHostelFeeChallans))
                     {
 						$sno = 1;
                         foreach($viewHostelFeeChallans as $record)
                         {
+
+                    $princepleAmount = $CI->feechallan_model->getPrincepleAmount($record->regno,$record->challanno);
                     ?>
                     <tr>
                       <td><?php echo $sno ?></td>
@@ -83,7 +89,7 @@
                       <td><?php echo $record->nationality ?></td>
                       <td><?php echo $record->challanno ?></td>
                       <td><?php echo $record->current_semester ?></td>
-                      <td><?php echo $record->fineamount ?></td>
+                      <td><?php echo $princepleAmount ?></td>
                       <td><?php echo $record->updated_at ?></td>  
                       <td><?php echo $record->duedate ?></td>
                       <td><?php if($record->publish == 1) { ?><span class="bg-green-active color-palette"><?php echo 'Published';?></span><?php } 

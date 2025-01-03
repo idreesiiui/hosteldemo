@@ -15,9 +15,10 @@ $(document).ready(function() {
 			async: false,
             success:function(data){
 				//$('#dept').html(data);
-				//console.log(data);
+				console.log(typeof(data));
+				console.log(data);
 				
-				if (data == "1")
+				if (data.trim() == "1")
 				{
 					var data = 'Record Updated Sucessfully'; 
 				  $('#feedback').html(data);

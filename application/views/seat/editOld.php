@@ -9,6 +9,8 @@ $occupied = '';
 $seatId = '';
 $seat = '';
 
+//var_dump($seatInfo);
+
 if(!empty($seatInfo))
 {
     foreach ($seatInfo as $uf)
@@ -22,6 +24,7 @@ if(!empty($seatInfo))
 		$occupied = $uf->OCCUPIED;
         $seatId = $uf->SEATID;
 		$seat = $uf->SEAT;
+        $CAPTUREBY = $uf->CAPTUREBY;
     }
 }
 
@@ -33,7 +36,7 @@ if(!empty($seatInfo))
     <section class="content-header">
       <h1>
         Seat Management
-        <small>Add / Edit User</small>
+        <small>Add / Edit Seat</small>
       </h1>
     </section>
     
@@ -104,7 +107,7 @@ if(!empty($seatInfo))
                                 </div>
                             </div>
                             <div class="row">
-                            <div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="seat">Seat</label>
                                         <select class="form-control required" id="seat" name="seat">
@@ -116,6 +119,13 @@ if(!empty($seatInfo))
                                         <option value="E">E</option>
                                         <option value="F">F</option>-->       
                                        </select>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="seat">Accupied By</label>
+                                        <input class="form-control" type="text" name="CAPTUREBY" value="<?php echo $CAPTUREBY; ?>">
                                        
                                     </div>
                                 </div>

@@ -111,12 +111,8 @@ class Cards extends BaseController
 		 $gender = $this->gender;
 		 
 		 $regno = $this->input->post('regno');
-
 		 
 		 $data['viewcardsInfo'] = $this->card_model->HostelCardsDetailId($regno, $gender);
-		//  var_dump($data['viewcardsInfo']);
-		 // var_dump($gender);
-		 // exit();
 		 
 		 $data['oraclepic'] = $this->common_model->PictureOracle($regno);
 				
@@ -315,6 +311,8 @@ class Cards extends BaseController
 
 		$valpic = array();
 
+
+
 		if(!empty($hostelinfo))	
 		{
 			foreach($hostelinfo as $key => $info) {
@@ -361,8 +359,11 @@ class Cards extends BaseController
 					$newArray[$key]['email']= $viewemail[0]->EMAIL;
 				}					 
 			}
+
+
 				
 			$data['viewcardsInfo'] = $newArray;
+			//var_dump($data['viewcardsInfo']); exit();
 
 			$data['cardpic'] = $valpic;
 			

@@ -7,6 +7,36 @@ class common_model extends CI_Model
 		$this->otherdb = $this->load->database('otherdb', TRUE);
 	}
 
+	function find($table,$where){
+		$query = $this->otherdb->where( $where )->get($table);
+		return $query->num_rows();
+	}
+
+	function updateData($where,$table,$data)
+	{
+		$this->otherdb->where( $where )->update( $table , $data);
+
+		return $this->otherdb->affected_rows();	
+	}
+
+	function insertData($table,$data)
+	{
+		$this->otherdb->insert( $table, $data );
+		return $this->otherdb->insert_id();	
+	}
+
+	function getWhere($select,$table,$where)
+	{
+		return $this->otherdb->select( $select )
+							->where( $where )
+							->get($table)						
+							->result_array();
+	}
+	function getAll($table)
+	{
+		return $this->otherdb->get($table)->result_array();
+	}
+
 	function GetGenderById($userId)
     {		
 		return $this->otherdb->select('GENDER')
@@ -14,19 +44,6 @@ class common_model extends CI_Model
 					->get('TBL_USERS')
 					->result();
     }
-
-    function getWhere($select,$table,$where)
-	{
-		return $this->otherdb->select( $select )
-						->where( $where )
-						->get($table)						
-						->result_array();
-	}
-
-	function getAll($table)
-	{
-		return $this->otherdb->get($table)->result_array();
-	}
 
     function GetActiveSemester($gender)
     {
@@ -40,7 +57,7 @@ class common_model extends CI_Model
 
     function PictureOracle($regno)
     {
-        $result = $this->db->select('STUDENTPICTURELR.STUDPIC, STUDENTPICTURELR.REGNO, TBL_HSTUDENTS.FATHERNAME, TBL_HSTUDENTS.CNIC, TBL_HSTUDENTS.GENDER')
+        $result = $this->db->select('STUDENTPICTURELR.STUDPIC,STUDENTPICTURELR.STUDPIC AS STD_PIC, STUDENTPICTURELR.REGNO, TBL_HSTUDENTS.FATHERNAME, TBL_HSTUDENTS.CNIC, TBL_HSTUDENTS.GENDER')
 	        ->from('TBL_HSTUDENTS')
 			->join('STUDENTPICTURELR', 'STUDENTPICTURELR.REGNO = TBL_HSTUDENTS.REGNO','INNER')
 			->where('TBL_HSTUDENTS.REGNO', $regno)
@@ -57,7 +74,7 @@ class common_model extends CI_Model
 				$result = $query->result();
 			}      
 		//var_dump($result); exit();
-			return $result;	
+			return $result;		
     }
 
     function CheckPictureOracle($regno)

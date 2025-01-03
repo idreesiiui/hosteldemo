@@ -97,12 +97,13 @@ body {
 }
 
 .hostel_no {
-       font:bold 25pt Arial;
-       color:#3390FF;
-       position:absolute;
-       top:85pt;
-       left:35pt;
-       opacity: 0.4;
+    font: bold 25pt Arial;
+    color: #3390FF;
+    position: absolute;
+    top: 61pt;
+    left: 85pt;
+    opacity: 0.4;
+    transform: rotate(90deg);
 }
 
 .std_img_wrapper {
@@ -126,7 +127,7 @@ body {
 }
 .provost_sig_wrap {
        position: absolute; 
-       top: 95pt;
+       top: 106pt;
        left: 168.5pt; 
        width: 58.5pt;
        height: 58.5pt;
@@ -205,7 +206,7 @@ body {
 <body>
        <div class="content-wrapper">
               <span class="card_bg_pic">
-                     <img src="<?php echo base_url() ?>/uploads/image/bgpic-23.jpeg" >
+                     <img src="<?php echo base_url() ?>/uploads/image/bgpic-24-bg.jpg" >
               </span>
 
               <span class="uni_name">International Islamic University, Islamabad</span>
@@ -226,12 +227,12 @@ body {
 
               <span class="card_field_title std_name">Name</span>
               <span class="card_field_value std_name_value">
-                     <?php echo $viewcardsInfo[0]->NAME?>
+                     <?php echo $viewcardsInfo[0]->NAME; ?>
               </span>
 
               <span class="card_field_title std_father_name">Father's Name</span>
               <span class="card_field_value std_father_name_value">
-                     <?php echo $fname[0]->FATHERNAME; ?>              
+                     <?php echo $viewcardsInfo[0]->FATHERNAME; ?>              
               </span>
 
               <style>#f3{font:italic 9pt Arial;font-weight:bolder}</style>
@@ -252,49 +253,50 @@ body {
                      echo $viewcardsInfo[0]->ROOMDESC.'-'.$attachi.$viewcardsInfo[0]->SEAT.'/'.$viewcardsInfo[0]->HOSTEL_NO; 
                      }else{
 
-                     echo $viewcardsInfo[0]->ROOMDESC.'-'.$viewcardsInfo[0]->SEAT.'/'.$viewcardsInfo[0]->HOSTEL_NO; 
+                     echo $viewcardsInfo[0]->ROOMDESC.'-'.$viewcardsInfo[0]->SEAT.'/'.$viewcardsInfo[0]->HOSTEL_NO;
+
                      }
                      ?>
+                     <?php if(false){ ?>
+                            (Imam Room)
+                     <?php } ?>
               </span>
 
               <span class="std_img_wrapper">
 
                      <?php if(!empty($viewcardsInfo[0]->ID) && !empty($oraclepic)){ 
 
-                     $blobimg = $oraclepic[0]->STUDPIC; 
-                     
 
+                     $blobimg = $oraclepic[0]->STUDPIC;
+                     $STD_PIC = $oraclepic[0]->STD_PIC; 
 
+                    // var_dump($blobimg); exit(); 
 
-                    // $blobimg = $StudentInfo[0]->picture;
+                    $imageData = base64_decode($blobimg);
 
-                            // Decode the Base64 string, getting the binary data of the image
-                            $imageData = base64_decode($blobimg);
-
-                           $image_name = str_replace("/", "", $StudentInfo[0]->REGNO);
+                           $image_name = str_replace("/", "", $viewcardsInfo[0]->REGNO);
+                     //var_dump($image_name);
 
                             // Specify the path where you want to save the image
-                            $filePath = 'assets/student_pics/'.$image_name.'.png';
+                            $filePath = 'assets/student_pics/'.trim($image_name).'.png';
 
                             // Write the binary data to the file
 
-                            $resutl = file_put_contents($filePath, $imageData);
+                            if(!empty($oraclepic[0]->STUDPIC)){
+
+                                   file_put_contents($filePath, $imageData);
+                            }
+
+                           if(empty($STD_PIC)){
                             
                             ?>
-                            <img class="std_img" alt="student picture" src ="assets/student_pics/<?= $image_name ?>.png"/>
+                            <img class="std_img" alt="student picture" src ="http://usis.iiu.edu.pk:64453/hostel/assets/student_pics/<?= $image_name ?>.png"/>
+                     <?php } else { ?>
+
+                             <img class="std_img" alt="student picture" src ="data:image/jpeg;base64,<?php echo base64_encode($blobimg); ?>"/> 
 
 
-
-
-
-
-                    
-
-
-
-                            <!-- <img class="std_img" alt="student picture" src ="data:image/jpeg;base64,<?php //echo base64_encode($blobimg); ?>"/> -->
-
-                     <?php } else {?>
+                     <?php } } else {?>
        	             <img class="std_img no_img" alt="student picture" src="<?php echo base_url()?>uploads/image/noimg.png">
                      <?php }?> 
               </span>
@@ -323,6 +325,9 @@ body {
 
               <span class="card_field_value cardRemarksValue">
                      <?php echo $viewcardsInfo[0]->ALLOTTYPE; ?>
+                     <?php if(false){ ?>
+                            (Duplicate Card)
+                     <?php } ?>
               </span>
 
 
@@ -340,7 +345,7 @@ body {
               <span class="card_field_title instruction">Instructions:</span>
 
               <span class="card_field_title instruction_list">Boarder's seat shall be liable for cancellation on absenting himself without leave<br> approval from Vice President (Academics).<br><br>
-              Card (along with Hostel Clearance Form) must be submitted in Provost Office <br>while leaving the hostel.In case of Overstay Rs 100-per day will be charged.<br> In case of losing card, duplicate will be issued on payment of Rs 500.<br><br>
+              Card (along with Hostel Clearance Form) must be submitted in Provost Office <br>while leaving the hostel.In case of Overstay Rs 100-per day will be charged.<br> In case of losing card, duplicate will be issued on payment of Rs 600.<br><br>
               After Expiry of Validity date if student intends to extend his hostel accomodation,<br> he will have to apply for seat renewal according schedule displayed on <br>notice boards in the start of every new semester.
               </span>
        </div>

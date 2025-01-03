@@ -18,18 +18,13 @@
                     </ul>
                 </div>
           </div>
-          <?php //var_dump($StudentInfo); ?>
         <div class="col-md-8 register-right">
      
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row register-heading">
-                            <h5 class="ml-3 mr-5 mt-5" style="text-decoration:underline;">Hostel Registeration for Semseter 
-                                <strong> 
-                                    <?php echo strtoupper($semestercode[0]->SEMCODE)?> 
-                                </strong>
-                            </h5>
-                            <?php 
+                            <h5 class="ml-3 mr-5 mt-5" style="text-decoration:underline;">Hostel Registeration for Semseter <strong> <?php echo strtoupper($semestercode[0]->SEMCODE)?> </strong></h5>
+                           <?php 
                             if(!empty($StudentInfo) && isset($StudentInfo)){ 
                             $blobimg = $StudentInfo[0]->picture;
 
@@ -42,30 +37,27 @@
                             $filePath = 'assets/student_pics/'.$image_name.'.png';
 
                             // Write the binary data to the file
-                            var_dump($StudentInfo[0]->picture); exit();
                             if(!empty($StudentInfo[0]->picture)){
-
-                                $resutl = file_put_contents($filePath, $imageData);
+                            $resutl = file_put_contents($filePath, $imageData);
                             }
-                            
                             ?>
-                          	<img class="std_img" alt="student picture" src ="assets/student_pics/<?= $image_name ?>.png"/>
+                            <img class="std_img" alt="student picture" src ="assets/student_pics/<?= $image_name ?>.png"/>
                          
-                         	<?php } else {?>
+                            <?php } else {?>
                                 <img src="<?php echo base_url();?>/assets/frontend/img/usis/avatar_female.png" alt="Avatar" class="mt-1 ml-5 avatar">
-                        	<?php }?>
+                            <?php }?>
                         </div>
                         <div class="col-md-11" style="float:right; top: 40px;">
 								<?php
                                     $this->load->helper('form');
                                     $error = $this->session->flashdata('error');
-                                    if($error)
+                                    if($error || $err_message)
                                     {
                                 ?>
                                 <div class="alert alert-danger alert-dismissable instruction">
                                     <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
                                     <?php echo $this->session->flashdata('error'); ?> 
-                                                     
+                                    <?php echo $err_message; ?>                   
                                 </div>
                                 <?php } ?>
                                 <?php  
@@ -79,36 +71,35 @@
                                 </div>
                                 <?php } ?>        
                          </div> 
-
                   <form role="form" class="row register-form " id="signup" action="<?php echo base_url()?>appformmalesignup" method="post">           
                   	<h5>Student Information</h5>
                     <div class="row border mb-3">
                             <div class="col-md-6 form-group">
                                 <label for="exampleFormControlSelect2">Reg. No.</label>
-                                <input type="text" class="form-control required" id="regno" placeholder="123-FBAS/BSSE/S10" name="regno" maxlength="128" value="<?php echo $StudentInfo[0]->REGNO; ?>" readonly>
-                                <input type="hidden" class="form-control required" id="protittle" name="protittle" maxlength="128" value="<?php echo $StudentInfo[0]->PROTITTLE; ?>" readonly>
+                                <input type="text" class="form-control required" id="regno" placeholder="123-FBAS/BSSE/S10" name="regno" maxlength="128" value="<?php echo $StudentInfo[0]->REGNO ?>" readonly>
+                                <input type="hidden" class="form-control required" id="protittle" name="protittle" maxlength="128" value="<?php echo $StudentInfo[0]->PROTITTLE ?>" readonly>
                                 <input type="hidden" class="form-control required" id="semcode" name="semcode" value=" <?php echo $semestercode[0]->SEMCODE;?> " >
                                  <input type="hidden" class="form-control required" id="hostelregdate" name="hostelregdate" value=" <?php echo $semestercode[0]->SEMCODE;?> " >
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="exampleFormControlSelect2">Full Name</label>
-                                <input type="text" class="form-control required" id="name" name="name" maxlength="128" readonly value="<?php echo $StudentInfo[0]->STUDENTNAME; ?>">
-                                <input type="hidden" class="form-control required" id="dept" name="dept" maxlength="128" readonly value="<?php echo $StudentInfo[0]->DEPARTMENTNAME; ?>">   
+                                <input type="text" class="form-control required" id="name" name="name" maxlength="128" readonly value="<?php echo $StudentInfo[0]->STUDENTNAME ?>">
+                                <input type="hidden" class="form-control required" id="dept" name="dept" maxlength="128" readonly value="<?php echo $StudentInfo[0]->DEPARTMENTNAME ?>">   
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="exampleFormControlSelect2">Father Name</label>
-                                <input type="text" class="form-control required" id="fname" name="fname" readonly value="<?php echo $StudentInfo[0]->FATHERNAME; ?>">
+                                <input type="text" class="form-control required" id="fname" name="fname" readonly value="<?php echo $StudentInfo[0]->FATHERNAME ?>">
                                 <input type="hidden" class="form-control required" id="faculty" name="faculty" maxlength="128" readonly value="<?php echo $StudentInfo[0]->FACULTY ?? ''; ?>">
-                                <input type="hidden" class="form-control required" id="programe" name="programe" maxlength="128" readonly value="<?php echo $StudentInfo[0]->PROGRAME?>">
-                                <input type="hidden" class="form-control required" id="batchname" name="batchname" maxlength="128" readonly value="<?php echo $StudentInfo[0]->PROGRAME; ?>">
+                                <input type="hidden" class="form-control required" id="programe" name="programe" maxlength="128" readonly value="<?php echo $StudentInfo[0]->PROGRAME ?>">
+                                <input type="hidden" class="form-control required" id="batchname" name="batchname" maxlength="128" readonly value="<?php echo $StudentInfo[0]->BATCHNAME ?>">
                 			</div>
                             <!--<div class="col-md-6 form-group">-->
                                 <!--<label for="exampleFormControlSelect2">CGPA</label>-->
-                                
+                                <input type="hidden" class="form-control required" id="cgpa" name="cgpa" maxlength="12" value="<?php echo number_format($StudentInfo[0]->CGPA, 1, '.', '') ?>" readonly>
                             <!--</div>-->
                              <!--<div class="col-md-6 form-group">
                                 <label for="dept">Department</label>-->
-                                <input type="hidden" class="form-control required" id="dept" name="dept" maxlength="128" readonly value="<?php echo $StudentInfo[0]->DEPARTMENTNAME; ?>">
+                                <input type="hidden" class="form-control required" id="dept" name="dept" maxlength="128" readonly value="<?php echo $StudentInfo[0]->DEPARTMENTNAME ?>">
                             <!--</div>-->
                             
                             <div class="col-md-6 form-group">
@@ -122,12 +113,12 @@
 								 	}
 								  	else{
 								?>
-                                  <input type="text" class="form-control required" name="country" readonly required autofocus value="<?php echo $StudentInfo[0]->COUNTRY; ?>">
+                                  <input type="text" class="form-control required" name="country" readonly required autofocus value="<?php echo $StudentInfo[0]->COUNTRY ?>">
                             	<?php }  ?>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="exampleFormControlSelect2">Nationality</label>
-                                <input type="hidden" class="form-control required" id="ptittle" name="ptittle" readonly value="<?php echo $StudentInfo[0]->PROTITTLE; ?>">
+                                <input type="hidden" class="form-control required" id="ptittle" name="ptittle" readonly value="<?php echo $StudentInfo[0]->PROTITTLE ?>">
                                  <?php 
 									if(empty($StudentInfo[0]->NATIONALITY))
 									{
@@ -142,18 +133,18 @@
 								 	}
 								  	else{
 								?>
-                                  <input type="text" class="form-control required" id="nationality" name="nationality" readonly value="<?php echo $StudentInfo[0]->NATIONALITY; ?>">
+                                  <input type="text" class="form-control required" id="nationality" name="nationality" readonly value="<?php echo $StudentInfo[0]->NATIONALITY ?>">
                                   <?php }  ?>
                             </div>
                            
                             <!--<div class="col-md-6 form-group">
                                 <label for="programe">Programme</label>-->
-                                <input type="hidden" class="form-control required" id="programe" name="programe" maxlength="125" readonly value="<?php echo $StudentInfo[0]->PROGRAME; ?>">
-                                <input type="hidden" class="form-control required" id="protittle" name="protittle" maxlength="125" readonly value="<?php echo $StudentInfo[0]->PROTITTLE; ?>">  
+                                <input type="hidden" class="form-control required" id="programe" name="programe" maxlength="125" readonly value="<?php echo $StudentInfo[0]->PROGRAME ?>">
+                                <input type="hidden" class="form-control required" id="protittle" name="protittle" maxlength="125" readonly value="<?php echo $StudentInfo[0]->PROTITTLE ?>">  
                             <!--</div>-->
                             <!--<div class="col-md-6 form-group">
                                 <label for="role">Faculty</label>-->
-                                <input type="hidden" class="form-control required" id="faculty" name="faculty" maxlength="128" readonly value="<?php echo $StudentInfo[0]->FACULTY ?? '';?>"> 
+                                <input type="hidden" class="form-control required" id="faculty" name="faculty" maxlength="128" readonly value="<?php echo $StudentInfo[0]->FACULTY ?>"> 
                            <!-- </div>-->
                            
                             <?php 
@@ -169,7 +160,7 @@
 								 	}
 								  	else{
 								?>
-                                   <input type="hidden" class="form-control required" readonly id="dob" name="dob" maxlength="128" value="<?php echo $StudentInfo[0]->STUDENTDOB; ?>">
+                                   <input type="hidden" class="form-control required" readonly id="dob" name="dob" maxlength="128" value="<?php echo $StudentInfo[0]->STUDENTDOB ?>">
 								 
 								<?php }  ?>
                            
@@ -186,7 +177,7 @@
 								 	}
 								  	else{
 								?>
-                                <input type="hidden" class="form-control required" readonly id="cnic" name="cnic" maxlength="15" value="<?php echo $StudentInfo[0]->CNIC ??$StudentInfo[0]->cnic; ?>">
+                                <input type="hidden" class="form-control required" readonly id="cnic" name="cnic" maxlength="15" value="<?php echo $StudentInfo[0]->CNIC ?>">
                             <?php }  ?>
                             <div class="col-md-6 form-group">
                                 <label for="fcellNo">Father Cell No.</label>
@@ -205,7 +196,7 @@
 								 	}
 								  	else{
 								?>
-                                 <input type="hidden" class="form-control required" readonly id="paddress"  name="paddress" value="<?php echo $StudentInfo[0]->PERMANENT;?>">
+                                 <input type="hidden" class="form-control required" readonly id="paddress"  name="paddress" value="<?php echo $StudentInfo[0]->PERMANENT?>">
                            		<?php }  ?>
                             
                             
@@ -221,7 +212,7 @@
 								 	}
 								  	else{
 								?>
-                                 <input type="hidden" class="form-control required" readonly id="caddress"  name="caddress" value="<?php echo $StudentInfo[0]->PREADD;?>">
+                                 <input type="hidden" class="form-control required" readonly id="caddress"  name="caddress" value="<?php echo $StudentInfo[0]->PREADD?>">
                            		<?php }  ?>
                             
                             <div class="col-md-6 form-group">
@@ -230,7 +221,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="exampleFormControlSelect2">District</label><small style="color:red; font-size:10px"> Enter your Home Country district name.</small>
-                                <input type="text" class="form-control required" id="district"  name="district" maxlength="128" value=" <?php echo $StudentInfo[0]->DISTRICT;?>">
+                                <input type="text" class="form-control required" id="district"  name="district" maxlength="128" value=" <?php echo $StudentInfo[0]->DISTRICT?>">
                                 <input type="hidden" class="form-control required" id="stadmission"  name="stadmission" maxlength="128" value=" <?php echo $StudentInfo[0]->STADMISSION?>">
                             </div>
                             <div class="col-md-6 form-group">

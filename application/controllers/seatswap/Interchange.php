@@ -1294,11 +1294,16 @@ Link for Allotment Slip.</h3>';
 					  } 
 					if($studInfoExist == TRUE)
 					{
+						//var_dump($studInfoExist);
+
+						//	   exit();
+
 					$this->session->set_flashdata('success', 'Wow! you had already submitted Change request');
                 redirect('seatswap/Interchange/Fseatchange');
 					}
 					else
 					{
+
 						$NewStudChangeInfo = array(
 							'REGNO'=>$regno, 
 							'SEMCODE'=>$semcode,
@@ -1312,10 +1317,10 @@ Link for Allotment Slip.</h3>';
 							'SEAT1'=>$newseat, 
 							'CREATEDDTM'=>$dateTime
 						);
-
+						
 						$studChangeInserteds = $this->interchange_model->InsertStudentChangeRec($NewStudChangeInfo, $gender);
 
-					$result = $this->interchange_model->getRoomInfobyId($newhostel_no, $newroomdesc, $gender);
+						$result = $this->interchange_model->getRoomInfobyId($newhostel_no, $newroomdesc, $gender);
 
 					
 
@@ -1343,21 +1348,19 @@ Link for Allotment Slip.</h3>';
 							'CREATEDDTM'=>$dateTime
 						);
 
-						//var_dump($stdinfo); exit();
-						
+
 						
 
 						$seatInfo = array(
 							'CAPTUREBY' => $regno
 						);
 
-						//$this->seat_model->editSeat($seatInfo,$newseat);
+						$this->seat_model->editSeat($seatInfo,$newseat);
 
 						
-					if(TRUE)
-					 {
-
-					 	$this->load->library('pdf');
+					  if($studChangeInserteds)
+					  {
+					  	$this->load->library('pdf');
 
 					 	$data['oraclepic'] = $this->common_model->PictureOracle($regno);
 					
@@ -1374,16 +1377,15 @@ Link for Allotment Slip.</h3>';
 						
 					    //$this->pdf->stream("seat_change_form.pdf", $data);
 					    $this->pdf->stream("reallotment/ReAllotment/renewal.pdf", $data);
-
 						  
-						//echo '<i style="color:green;font-size:20px;font-family:calibri; padding: 20px;background-color: #f44336;color: white;opacity: 1;transition: opacity 0.6s;margin-bottom: 15px;background-color: #4CAF50;">Wow! request for Seat Change Submitted Successfully.</i><br><br> You will be redirect to previous page shortly !';
+						//echo '<i style="color:green;font-size:20px;font-family:calibri; padding: 20px; background-color: #f44336;color: white;opacity: 1;transition: opacity 0.6s;margin-bottom: 15px;background-color: #4CAF50;">Wow! request for Seat Change Submitted Successfully.</i><br><br> You will be redirect to previous page shortly !';
     					//header( "refresh:10;url=http://usis.iiu.edu.pk:64453/dashboard" );
-					}
-					else
-					{
+					  }
+					  else
+					   {
 						  
 						$this->session->set_flashdata('error', 'Fail! please try again');
-                		redirect('seatswap/Interchange/Fseatchange');
+                redirect('seatswap/Interchange/Fseatchange');
 					       
 					    }
 					}
@@ -1399,6 +1401,7 @@ Link for Allotment Slip.</h3>';
 				elseif($swapregno != '' && $swaphostel_no != '' && $swaproomdesc != '' && $swapseat != '' && $newseat == '')
 							{
 							    $studSwapInfoExist = $this->interchange_model->StudentSwapExisted($regno,$semcode);
+
 								if($studSwapInfoExist == TRUE)
 									{
 									$this->session->set_flashdata('success', 'Wow! you had already submitted Seat Swap request');

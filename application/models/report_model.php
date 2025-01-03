@@ -168,7 +168,9 @@ class Report_model extends CI_Model
 		    $otherdb->join('TBL_SEAT', 'TBL_SEAT.SEATID = tbl_seatchangemale.SEAT1','INNER');
 			$otherdb->where('tbl_seatchangemale.GENDER', $gender);
 			$otherdb->where('tbl_seatchangemale.SEMCODE', $semester);
-			$otherdb->where('tbl_seatchangemale.CHOSTEL', $hostel);
+			if(!empty($hostel)){
+				$otherdb->where('tbl_seatchangemale.CHOSTEL', $hostel);
+			}
 			$otherdb->order_by('tbl_seatchangemale.CREATEDDTM', 'ASC');
 			$query = $otherdb->get();
 			$result = $query->result();        
@@ -1023,14 +1025,15 @@ function getsemester($gender)
 
 
 	
-	function getBorderListAll($semester,$gender,$hostel,$faculty,$dept, $nationality, $programe)
+	function getBorderListAll($semester,$gender,$hostel,$faculty,$dept, $nationality, $programe,$ALLOTTYPE)
     {				
 		$otherdb = $this->load->database('otherdb', TRUE);
-			$otherdb->select('TBL_ALLOTMENT.HOSTELID,TBL_ALLOTMENT.STUDENTNAME,TBL_ALLOTMENT.STUDENTPHONE,TBL_ALLOTMENT.FATHEROCCUPATION,TBL_ALLOTMENT.ADDRESS, TBL_ALLOTMENT.CADDRESS, TBL_ALLOTMENT.FATHERPHONE,TBL_ALLOTMENT.REGNO, TBL_ALLOTMENT.FACULTY, TBL_ALLOTMENT.PROTITTLE, TBL_ALLOTMENT.DEPARTNAME, TBL_ALLOTMENT.EXT, TBL_ALLOTMENT.PROVINCE, TBL_ALLOTMENT.NATIONALITY, TBL_ALLOTMENT.ADMIN_VERIFY, TBL_HOSTEL.*,TBL_ROOM.*,TBL_SEAT.*');
+			$otherdb->select('TBL_ALLOTMENT.HOSTELID, TBL_ALLOTMENT.CNIC, TBL_ALLOTMENT.STUDENTNAME,TBL_ALLOTMENT.STUDENTPHONE,TBL_ALLOTMENT.FATHEROCCUPATION,TBL_ALLOTMENT.ADDRESS, TBL_ALLOTMENT.CADDRESS, TBL_ALLOTMENT.FATHERPHONE,TBL_ALLOTMENT.REGNO, TBL_ALLOTMENT.FACULTY, TBL_ALLOTMENT.PROTITTLE, TBL_ALLOTMENT.DEPARTNAME, TBL_ALLOTMENT.EXT,TBL_ALLOTMENT.ALLOTTYPE, TBL_ALLOTMENT.COUNTRY, TBL_ALLOTMENT.PROVINCE, TBL_ALLOTMENT.NATIONALITY, TBL_ALLOTMENT.ADMIN_VERIFY, TBL_USERS.*,TBL_HOSTEL.*,TBL_ROOM.*,TBL_SEAT.*');
 			$otherdb->from('TBL_ALLOTMENT');
 			$otherdb->join('TBL_HOSTEL', 'TBL_HOSTEL.HOSTELID = TBL_ALLOTMENT.HOSTELID','INNER');
 			$otherdb->join('TBL_ROOM', 'TBL_ROOM.ROOMID = TBL_ALLOTMENT.ROOMID','INNER');
 			$otherdb->join('TBL_SEAT', 'TBL_SEAT.SEATID = TBL_ALLOTMENT.SEATID','INNER');
+			$otherdb->join('TBL_USERS', 'TBL_USERS.userId = TBL_ALLOTMENT.EMAILID','INNER');
 
 			$query = $otherdb->where('SEMCODE',$semester);	
 
@@ -1038,6 +1041,10 @@ function getsemester($gender)
 
 			if($nationality != 'All'){
 				$query = $otherdb->where('TBL_ALLOTMENT.NATIONALITY', $nationality);
+			}
+			if($ALLOTTYPE == 'Allotment'){				
+				$query = $otherdb->where('TBL_ALLOTMENT.ALLOTTYPE', 'Allotment');
+				$query = $otherdb->or_where('TBL_ALLOTMENT.ALLOTTYPE', 'Alloted');
 			}
 			if($hostel != 'All'){
 				$query = $otherdb->where('TBL_ALLOTMENT.HOSTELID', $hostel);
@@ -1065,17 +1072,22 @@ function getsemester($gender)
 			$query1 = $otherdb->last_query();		
 			
 			
-			$otherdb->select('TBL_REALLOTMENT.HOSTELID, TBL_REALLOTMENT.STUDENTNAME,TBL_REALLOTMENT.STUDENTPHONE,TBL_REALLOTMENT.FATHEROCCUPATION,TBL_REALLOTMENT.ADDRESS, TBL_REALLOTMENT.CADDRESS, TBL_REALLOTMENT.FATHERPHONE,TBL_REALLOTMENT.REGNO, TBL_REALLOTMENT.FACULTY,  TBL_REALLOTMENT.PROTITTLE, TBL_REALLOTMENT.DEPARTNAME, TBL_REALLOTMENT.EXT, TBL_REALLOTMENT.PROVINCE, TBL_REALLOTMENT.NATIONALITY, TBL_REALLOTMENT.ADMIN_VERIFY, TBL_HOSTEL.*,TBL_ROOM.*,TBL_SEAT.*');
+			$otherdb->select('TBL_REALLOTMENT.HOSTELID, TBL_REALLOTMENT.CNIC, TBL_REALLOTMENT.STUDENTNAME,TBL_REALLOTMENT.STUDENTPHONE,TBL_REALLOTMENT.FATHEROCCUPATION,TBL_REALLOTMENT.ADDRESS, TBL_REALLOTMENT.CADDRESS, TBL_REALLOTMENT.FATHERPHONE,TBL_REALLOTMENT.REGNO, TBL_REALLOTMENT.FACULTY,  TBL_REALLOTMENT.PROTITTLE, TBL_REALLOTMENT.DEPARTNAME, TBL_REALLOTMENT.EXT, TBL_REALLOTMENT.ALLOTTYPE, TBL_REALLOTMENT.PROVINCE, TBL_REALLOTMENT.NATIONALITY, TBL_REALLOTMENT.COUNTRY, TBL_REALLOTMENT.ADMIN_VERIFY,TBL_USERS.*, TBL_HOSTEL.*,TBL_ROOM.*,TBL_SEAT.*');
 			$otherdb->from('TBL_REALLOTMENT');
 			$otherdb->join('TBL_HOSTEL', 'TBL_HOSTEL.HOSTELID = TBL_REALLOTMENT.HOSTELID','INNER');
 			$otherdb->join('TBL_ROOM', 'TBL_ROOM.ROOMID = TBL_REALLOTMENT.ROOMID','INNER');
 			$otherdb->join('TBL_SEAT', 'TBL_SEAT.SEATID = TBL_REALLOTMENT.SEATID','INNER');
+			$otherdb->join('TBL_USERS', 'TBL_USERS.userId = TBL_REALLOTMENT.EMAILID','INNER');
 			$query = $otherdb->where('SEMCODE',$semester);
 
 			$query = $otherdb->where('TBL_REALLOTMENT.GENDER', $gender);
 
 			if($nationality != 'All'){
 				$query = $otherdb->where('TBL_REALLOTMENT.NATIONALITY', $nationality);
+			}
+			if($ALLOTTYPE == 'REALLOTMENT'){				
+				$query = $otherdb->where('TBL_REALLOTMENT.ALLOTTYPE', 'REALLOTMENT');
+				$query = $otherdb->or_where('TBL_REALLOTMENT.ALLOTTYPE', 'ReAlloted');
 			}
 			if($hostel != 'All'){
 				$query = $otherdb->where('TBL_REALLOTMENT.HOSTELID', $hostel);
@@ -1100,11 +1112,22 @@ function getsemester($gender)
 			}
 
 			$otherdb->get(); 
-			$query2 =  $otherdb->last_query();			
+			$query2 =  $otherdb->last_query();
 
-			$query = $otherdb->query($query1." UNION ".$query2);
 			
-			return $result = $query->result();
+
+			if($ALLOTTYPE == 'Allotment'){
+				$query = $otherdb->query($query1);
+				return $query->result();
+				//echo ($query1); exit();
+			} else if($ALLOTTYPE == 'REALLOTMENT'){
+				$query = $otherdb->query($query2);
+				return $query->result();
+			}else{
+				$query = $otherdb->query($query1." UNION ".$query2);
+				return $query->result();
+			}
+			
     }
 
 	

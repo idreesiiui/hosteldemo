@@ -25,7 +25,7 @@
                     <form class="form-horizontal" id="seatsearchList" name="validateform" method="post" action="<?php echo base_url() ?>seat/seat/viewSeatdetailinfo" >
               <div class="box-body">
                 <div class="form-group">
-                  <label style="width:80px" for="text" class="col-sm-2 control-label">Hostel</label>
+                  <label style="width:48px" for="text" class="col-sm-2 control-label">Hostel:</label>
 
                   <div class="col-sm-2">
                     <select class="form-control" name="hostelno" id="hostelno">
@@ -43,14 +43,14 @@
                     ?>
                   </select>
                   </div>
-                  <label style="width:80px" for="text" class="col-sm-2 control-label">Rooms</label>
+                  <label style="width:45px" for="text" class="col-sm-2 control-label">Rooms:</label>
 
                   <div class="col-sm-2">
                      <select class="form-control" id="roomno" name="roomno">
                          <option value="">Please select hostel first</option>      
                      </select>
                   </div>
-                   <label style="width:80px" for="text" class="col-sm-2 control-label">Seat Type</label>
+                   <label style="width:50px" for="text" class="col-sm-2 control-label">Seat Type:</label>
 
                    <div class="col-sm-2">
                     <select class="form-control" name="seatType" id="seatType">
@@ -61,7 +61,7 @@
                      
                   </select>
                   </div>
-                  <label style="width:80px" for="text" class="col-sm-2 control-label">Occupied</label>
+                  <label style="width:60px" for="text" class="col-sm-2 control-label">Occupied:</label>
                   <div class="col-sm-2">
                     <select class="form-control" name="occupy" id="occupy">
                     <option value="">Select Status</option>

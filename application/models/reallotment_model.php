@@ -358,11 +358,15 @@ class ReAllotment_model extends CI_Model
     function viewreallotmentInfo($gender,$hostelno,$roomno)
     {
 
-        $this->otherdb->select('TBL_REALLOTMENT.*,TBL_SEAT.SEAT,TBL_SEAT.OCCUPIED,TBL_HOSTEL.HOSTEL_NO,TBL_ROOM.ROOMDESC,TBL_ROOM.ROOMTYPE')
+        $this->otherdb->select('TBL_REALLOTMENT.*,TBL_SEAT.SEAT,TBL_SEAT.OCCUPIED,TBL_HOSTEL.HOSTEL_NO,TBL_ROOM.ROOMDESC,TBL_ROOM.ROOMTYPE,TBL_USERS.email')
     		->from('TBL_REALLOTMENT')
 			->join('TBL_SEAT', 'TBL_SEAT.SEATID = TBL_REALLOTMENT.SEATID','INNER')
 			->join('TBL_HOSTEL', 'TBL_HOSTEL.HOSTELID = TBL_REALLOTMENT.HOSTELID','INNER')
-			->join('TBL_ROOM', 'TBL_ROOM.ROOMID = TBL_REALLOTMENT.ROOMID','INNER');
+			->join('TBL_ROOM', 'TBL_ROOM.ROOMID = TBL_REALLOTMENT.ROOMID','INNER')
+			->join('TBL_USERS', 'TBL_USERS.userId = TBL_REALLOTMENT.EMAILID','INNER');
+
+			//$this->otherdb->where('TBL_REALLOTMENT.NATIONALITY','Pakistani');
+			//$this->otherdb->where('TBL_REALLOTMENT.REALLOTMENT_ID >=',109182);
 
 			if(!empty($gender)){
 				$this->otherdb->where('TBL_REALLOTMENT.GENDER',$gender);

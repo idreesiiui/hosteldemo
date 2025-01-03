@@ -32,16 +32,18 @@
                       <th>Student Name</th>
                       <th>Reg No</th>
                       <th>Student Phone</th>
-                      <th>Father Occupation</th>
-                      <th>Father Phone</th>
-                     <!-- <th>CNIC</th>-->
+                      <!--<th>Father Occupation</th>-->
+                      <!--<th>Father Phone</th>-->
+                      <th>CNIC</th>
                       <th>Faculty</th>
                       <th>Programe</th>
+                      <th>Allot Type</th>
                       <th>Dept Name</th>
                       <th>Province</th>
                       <!--<th>Batch Name</th>-->
                       <th>Address</th>
-                      <!--<th>Country</th>-->
+                      <th>Email</th>
+                      <th>Country</th>
                       <th>Nationality</th>
                       <th>Hostel</th>
                       <th>Room</th>
@@ -71,31 +73,19 @@
                     <tr <?php if($studentInfo[$i]->ADMIN_VERIFY == 0) {?> style="background-color:#ED9B9D;" <?php }?>>
                       <td><?php echo $count ?></td>
                       <td><?php echo $studentInfo[$i]->STUDENTNAME ?></td>
-                      <td><?php if($studentInfo[$i]->REGNO == $batchname[$i][0]->REGNO) 
-					  {
-						    $a = $batchname[$i][0]->BATCHNAME;
-
-							if (strpos($a, '1.5') !== false) {
-								
-								echo $studentInfo[$i]->REGNO.' (1.5)';
-							}
-							else 
-							{
-							   	echo $studentInfo[$i]->REGNO;
-							}
-					   }
-							 ?>
-					   </td>
+                      <td><?php echo $studentInfo[$i]->REGNO; ?> </td>
                        <td><?php echo $studentInfo[$i]->STUDENTPHONE ?></td>
-                       <td><?php echo $studentInfo[$i]->FATHEROCCUPATION ?></td>
-                      <td><?php echo $studentInfo[$i]->FATHERPHONE ?></td>
-                      <!-- <td><?php //echo $studentInfo[$i]->CNIC ?></td>-->
-                       <td><?php echo $studentInfo[$i]->FACULTY ?></td>
+                       <!--<td><?php //echo $studentInfo[$i]->FATHEROCCUPATION ?></td>-->
+                      <!--<td><?php //echo $studentInfo[$i]->FATHERPHONE ?></td>-->
+                       <td><?php echo $studentInfo[$i]->CNIC ?></td>
+                       <td><?php echo $studentInfo[$i]->FACULTY; ?></td>
                        <td><?php echo $studentInfo[$i]->PROTITTLE ?></td>
+                      <td><?php echo $studentInfo[$i]->ALLOTTYPE; ?></td>
                       <td><?php echo $studentInfo[$i]->DEPARTNAME ?></td>
-                      <td><?php echo $studentInfo[$i]->PROVINCE//echo $batchname[$i][0]->BATCHNAME ?></td>
+                      <td><?php echo $studentInfo[$i]->PROVINCE; ?></td>
                       <td><?php echo $studentInfo[$i]->ADDRESS ?></td>
-                      <!--<td><?php //echo $studentInfo[$i]->DISTRICT.' / '.$studentInfo[$i]->COUNTRY ?></td>-->
+                      <td><?php echo $studentInfo[$i]->email ?></td>
+                      <td><?php echo $studentInfo[$i]->COUNTRY; ?></td>
                       <td><?php echo $studentInfo[$i]->NATIONALITY ?></td>
                       <td><?php echo $studentInfo[$i]->HOSTEL_NO ?></td>
                     <td><?php echo $studentInfo[$i]->ROOMDESC ?></td>

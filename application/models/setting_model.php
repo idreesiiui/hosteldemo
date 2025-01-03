@@ -197,16 +197,16 @@ class Setting_model extends CI_Model
     }
 
 
-    function DeleteAllRecordAllot($gender,$regno)
+    function DeleteAllRecordAllot($gender)
     {
-		$this->otherdb->where('GENDER', $gender)->where('REGNO', $regno)->delete('TBL_ALLOTMENT');
+		$this->otherdb->where('GENDER', $gender)->delete('TBL_ALLOTMENT');
 
 		return $this->otherdb->affected_rows();
     }
 	
-    function DeleteAllRecordReallot($gender, $regno)
+    function DeleteAllRecordReallot($gender)
     {
-		$this->otherdb->where('GENDER', $gender)->where('REGNO', $regno)->delete('TBL_REALLOTMENT');
+		$this->otherdb->where('GENDER', $gender)->delete('TBL_REALLOTMENT');
 
 		return $this->otherdb->affected_rows();
     } 
@@ -230,10 +230,7 @@ class Setting_model extends CI_Model
 	
 	function GetAllallotment($gender)
     {
-		return $this->otherdb->where('GENDER', $gender)
-							//->where('ADMIN_VERIFY !=', 2)
-							->get('TBL_ALLOTMENT')
-							->result();
+		return $this->otherdb->where('GENDER', $gender)->get('TBL_ALLOTMENT')->result();
     }
 		
 	function InsertAllotReallot($userInfo)
@@ -262,9 +259,8 @@ class Setting_model extends CI_Model
 	function GetREAllallotment($gender)
     {
 		return $this->otherdb->where('GENDER', $gender)
-							//->where('ADMIN_VERIFY !=', 2)
-							->get('TBL_REALLOTMENT')
-							->result();
+					->get('TBL_REALLOTMENT')
+					->result();
     }	
 	
 	function InserReAllottmigrate($semInfo)

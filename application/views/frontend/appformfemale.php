@@ -23,14 +23,28 @@
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row register-heading">
                             <h5 class="ml-3 mr-5 mt-5" style="text-decoration:underline;">Hostel Registeration for Semseter <strong> <?php echo strtoupper($semestercode[0]->SEMCODE)?> </strong></h5>
-                            <?php /*if(!empty($studentpic) && isset($studentpic)){ 
-                            $blobimg = $studentpic[0]->STUDPIC;*/
+                            <?php
+                            if(!empty($StudentInfo) && isset($StudentInfo)){ 
+                            $blobimg = $StudentInfo[0]->picture;
+
+                            // Decode the Base64 string, getting the binary data of the image
+                            $imageData = base64_decode($blobimg);
+
+                           $image_name = str_replace("/", "", $StudentInfo[0]->REGNO);
+
+                            // Specify the path where you want to save the image
+                            $filePath = 'assets/student_pics/'.$image_name.'.png';
+
+                            // Write the binary data to the file
+                            if(!empty($StudentInfo[0]->picture)){
+                            $resutl = file_put_contents($filePath, $imageData);
+                            }
                             ?>
-                          	<?php //echo '<img src ="data:image/jpeg;base64,'.base64_encode($blobimg).'" class="mt-1 ml-5 avatar"/>';?>
+                            <img class="std_img" alt="student picture" src ="assets/student_pics/<?= $image_name ?>.png"/>
                          
-                         	<?php //} else {?>
-                                <!--<img src="<?php //echo base_url();?>/assets/frontend/img/usis/avatar_female.png" alt="Avatar" class="mt-1 ml-5 avatar">-->
-                        	<?php //}?>
+                            <?php } else {?>
+                                <img src="<?php echo base_url();?>/assets/frontend/img/usis/avatar_female.png" alt="Avatar" class="mt-1 ml-5 avatar">
+                            <?php }?>
                         </div>
                         <div class="col-md-11 pull-right" style="float:right; top: 40px;">
 								<?php
@@ -74,13 +88,13 @@
                             <div class="col-md-6 form-group">
                                 <label for="exampleFormControlSelect2">Father Name</label>
                                 <input type="text" class="form-control required" id="fname" name="fname" readonly value="<?php echo $StudentInfo[0]->FATHERNAME ?>">
-                                <input type="hidden" class="form-control required" id="faculty" name="faculty" maxlength="128" readonly value="<?php// echo $StudentInfo[0]->FACULTY ?? ''; ?>"> 
+                                <input type="hidden" class="form-control required" id="faculty" name="faculty" maxlength="128" readonly value="<?php echo $StudentInfo[0]->FACULTY ?? ''; ?>">
                                 <input type="hidden" class="form-control required" id="programe" name="programe" maxlength="128" readonly value="<?php echo $StudentInfo[0]->PROGRAME ?>">
                                 <input type="hidden" class="form-control required" id="batchname" name="batchname" maxlength="128" readonly value="<?php echo $StudentInfo[0]->BATCHNAME ?>">
                 			</div>
                             <!--<div class="col-md-6 form-group">-->
                                 <!--<label for="exampleFormControlSelect2">CGPA</label>-->
-                                <!-- <input type="hidden" class="form-control required" id="cgpa" name="cgpa" maxlength="12" value="<?php //echo number_format($StudentInfo[0]->CGPA, 1, '.', '') ?? ''; ?>" readonly> -->
+                                <!-- <input type="hidden" class="form-control required" id="cgpa" name="cgpa" maxlength="12" value="<?php //echo number_format($StudentInfo[0]->CGPA, 1, '.', '') ?>" readonly> -->
                             <!--</div>-->
                              <!--<div class="col-md-6 form-group">
                                 <label for="dept">Department</label>-->

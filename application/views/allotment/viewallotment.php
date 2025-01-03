@@ -59,6 +59,7 @@
                       <th>S.No</th>
                       <th>Reg No#</th>
                       <th>STUDENT NAME</th>
+                      <th>Email</th>
                       <th>Hostel No</th>
                       <th>Room No</th>
                       <th>Room Type</th>
@@ -82,14 +83,15 @@
                         {
                     ?>
                     <tr>
-                      <td><?php echo $sno ?></td>
-                      <td><?php echo $record->REGNO ?></td>
-                      <td><?php echo $record->STUDENTNAME ?></td>
-                      <td><?php echo $record->HOSTEL_NO ?></td>
-                      <td><?php echo $record->ROOMDESC ?></td>
-                      <td><?php echo $record->ROOMTYPE ?></td>
+                      <td><?php echo $sno; ?></td>
+                      <td><?php echo $record->REGNO; ?></td>
+                      <td><?php echo $record->STUDENTNAME; ?></td>
+                      <td><?php echo $record->email; ?></td>
+                      <td><?php echo $record->HOSTEL_NO; ?></td>
+                      <td><?php echo $record->ROOMDESC; ?></td>
+                      <td><?php echo $record->ROOMTYPE; ?></td>
                       <td><?php echo $record->SEAT;//.'='.$record->OCCUPIED; ?></td>
-                      <td><?php echo $record->ALLOTEDDATE ?></td>
+                      <td><?php echo $record->ALLOTEDDATE; ?></td>
                       <td><?php 
 					  $todaydate = date('y-m-d'); 
 					  $todaydate = str_replace('-', '/', $todaydate);
@@ -103,9 +105,9 @@
 					       echo $expdate;
 					  ?>
                       </td>
-                      <td><?php echo $record->COUNTRY ?></td>
-                      <td><?php echo $record->FEEAMOUNT ?></td>
-                      <td><?php echo $record->HOSTELBATCH ?></td>
+                      <td><?php echo $record->COUNTRY; ?></td>
+                      <td><?php echo $record->FEEAMOUNT; ?></td>
+                      <td><?php echo $record->HOSTELBATCH; ?></td>
                       <td>
 					  <?php
 					   $regno = $record->REGNO;

@@ -587,72 +587,56 @@ class Card_model extends CI_Model
         
         $regno = base64_decode($regno);
 
-        $result = $this->db->where('TBL_HSTUDENTS.REGNO', $regno)
-        					->get('TBL_HSTUDENTS')        
+        $result = $this->db->where('REGNO', $regno)
+        					->get('TBL_HSTUDENTS')
+        					->result_array();
+        if(empty($result)){
+        	$result = $this->otherdb->where('REGNO', $regno)
+        					->get('students')        
          					->result_array();
+        	//ACADPROGLEVEL => PROTITTLE
+        	$ACADPROGLEVEL = $result[0]['PROTITTLE'];
+	        //PROG_NAME => PROGRAME
+	        $PROG_NAME = $result[0]['PROGRAME'];
+	        $DEGREEDURATION = $result[0]['DEGREEDURATION'];
+        	//STADMISSION
+        	$STADMISSION = $result[0]['STADMISSION'];
+        } else {
+        	$ACADPROGLEVEL = $result[0]['ACADPROGLEVEL'];
+	        $PROG_NAME = $result[0]['PROG_NAME'];
+        	$STADMISSION = $result[0]['STADMISSION'];
+	        $ACADPROGCODE = $result[0]['ACADPROGCODE'];
 
-        $batchcode = $result[0]['BATCHCODE'];
-        $ACADPROGCODE = $result[0]['ACADPROGCODE'];
-        $YEAROFADM = $result[0]['STADMISSION'];
 
-        $degree_duration = $this->db->where('ACADPROGCODE', $ACADPROGCODE)
-					        ->get('TBL_ACADPROG')
-					        ->result_array();
-       
-        $DEGREEDURATION = $degree_duration[0]['DEGREEDURATION']; 
-
-        if($result[0]['ACADPROGLEVEL'] == 'BS'){
-        	$DEGREEDURATION = 48;
+	        $degree_duration = $this->db->where('ACADPROGCODE', $ACADPROGCODE)
+						        ->get('TBL_ACADPROG')
+						        ->result_array();
+	       
+	        //DEGREEDURATION
+	        $DEGREEDURATION = $degree_duration[0]['DEGREEDURATION']; 
         }
 
-        // if($result[0]['ACADPROGLEVEL'] == 'BS' && $result[0]['PROG_NAME'] == 'BS Islamic Studies (Usuluddin)' && $result[0]['NATIONALITY'] != 'Pakistani'){
-        // 	$DEGREEDURATION = 66;
-        // }else if($result[0]['ACADPROGLEVEL'] == 'BS' && $result[0]['PROG_NAME'] == 'BS Islamic Studies (Usuluddin)' && $result[0]['NATIONALITY'] == 'Pakistani'){
-        // 	$DEGREEDURATION = 60;
-        // } 
-
-
-        // if($result[0]['ACADPROGLEVEL'] == 'BS' && $result[0]['PROG_NAME'] == 'BS English Language & Literature' && $result[0]['NATIONALITY'] != 'Pakistani'){
-        // 	$DEGREEDURATION = 66;
-        // }else if($result[0]['ACADPROGLEVEL'] == 'BS' && $result[0]['PROG_NAME'] == 'BS English Language & Literature' && $result[0]['NATIONALITY'] == 'Pakistani'){
-        // 	$DEGREEDURATION = 60;
-        // } 
-
-
-        // if($result[0]['ACADPROGLEVEL'] == 'BS' && $result[0]['PROG_NAME'] == 'BS Translation & Interpretation' && $result[0]['NATIONALITY'] != 'Pakistani'){
-        // 	$DEGREEDURATION = 66;
-        // }else if($result[0]['ACADPROGLEVEL'] == 'BS' && $result[0]['PROG_NAME'] == 'BS Translation & Interpretation' && $result[0]['NATIONALITY'] == 'Pakistani'){
-        // 	$DEGREEDURATION = 60;
-        // } 
-
-
+        if($ACADPROGLEVEL == 'BS'){
+        	$DEGREEDURATION = 48;
+        } 
         
-        if($result[0]['ACADPROGLEVEL'] == 'PHD'){
+        if($ACADPROGLEVEL == 'PHD'){
         	$DEGREEDURATION = 36;
         }
 
+        if($ACADPROGLEVEL == 'BA'){
+        	$DEGREEDURATION = 24;
+        }        
 
-
-
-        if($result[0]['ACADPROGLEVEL'] == 'BA'){
+        if($ACADPROGLEVEL == 'MS' || $ACADPROGLEVEL == 'MSC' || $ACADPROGLEVEL == 'MA'){
         	$DEGREEDURATION = 24;
         }
 
-        // if($result[0]['ACADPROGLEVEL'] == 'BS' && $result[0]['PROG_NAME'] == 'BS Arabic' && $result[0]['NATIONALITY'] != 'Pakistani'){
-        // 	$DEGREEDURATION = 66;
-        // }else if($result[0]['ACADPROGLEVEL'] == 'BS' && $result[0]['PROG_NAME'] == 'BS Arabic' && $result[0]['NATIONALITY'] == 'Pakistani'){
-        // 	$DEGREEDURATION = 60;
-        // } 
-
-        if($result[0]['ACADPROGLEVEL'] == 'MS' || $result[0]['ACADPROGLEVEL'] == 'MSC' || $result[0]['ACADPROGLEVEL'] == 'MA'){
-        	$DEGREEDURATION = 24;
-        }
-
-        if($result[0]['ACADPROGLEVEL'] == 'LLB' && ($result[0]['PROG_NAME'] == 'LLB (5 Years)' || $result[0]['PROG_NAME'] == 'LLB (Hons) Shariah & Law')){
+        if($ACADPROGLEVEL == 'LLB' && ($PROG_NAME == 'LLB (5 Years)' || $PROG_NAME == 'LLB (Hons) Shariah & Law')){
         	$DEGREEDURATION = 60;
         }
 
-        $time_input = strtotime($YEAROFADM);
+        $time_input = strtotime($STADMISSION);
 
         
         $year = substr(explode('/', $regno)[2],1);
@@ -661,7 +645,8 @@ class Card_model extends CI_Model
 
 		$decad = date('Y');
 
-		$dec = $decad[0].$decad[1];		
+		$dec = $decad[0].$decad[1];	
+
 
         if($semster == 'S'){
 
@@ -679,6 +664,7 @@ class Card_model extends CI_Model
         $expiryMonth = date('m', strtotime('+'.$DEGREEDURATION.' months',$time_input));
         $expirydate = date('d-m-Y', strtotime('+'.$DEGREEDURATION.' months',$time_input));
       
+       //  var_dump($expiryYear); exit();
        
        if($expiryMonth >= '08' && $expiryMonth <= '12'){
 

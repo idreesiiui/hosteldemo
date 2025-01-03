@@ -28,13 +28,6 @@ class remarksController extends BaseController
 
     	$this->global['pageTitle'] = 'IIUI Hostels : Find Student to Add Remakrs';
         
-
-    	//$gender = $this->gender;
-
-    	//$data['oraclepic'] = $this->common_model->PictureOracle($regno);
-
-    	//$data['student'] = $this->card_model->findHostelStudentByRegNo($regno);
-
     	$this->loadViews("remarks/addRemarks", $this->global, null, NULL);
     }
 

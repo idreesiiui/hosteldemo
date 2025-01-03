@@ -98,9 +98,14 @@
                       <td><?= ($record->STUDENTNAME) ?? '';; ?></td>
                       <td><?= ($record->STUDENTPHONE) ?? ''; ?></td>
                       <td><?= ($record->FATHERNAME) ?? '';; ?></td>
-                      <td><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#remarksModal">
-  Remarks
-</button></td>
+                      <td>
+                        <?php if(count($remarks) >= 1){ ?>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#remarksModal">Remarks</button>
+                      <?php }else{ ?>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#remarksModal">Remarks</button>
+
+                      <?php } ?>
+                      </td>
                       <td><?= ($record->HOSTELNO) ?? '';; ?></td>
                       <td><?= ($record->ROOMNO) ?? '';; ?></td>
                       <td><?= ($record->SEAT) ?? '';; ?></td>

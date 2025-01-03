@@ -15,7 +15,7 @@
                     
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                <h4 style="margin-left:25%; margin-right:15%; text-decoration:underline"><?php echo 'Seat Change Application for Semester'.'<b>'.$records[0]->SEMCODE.'</b>';?></h4>
+                <h4 style="margin-left:25%; margin-right:15%; text-decoration:underline">Seat Change Application for Semester <b> <?php echo $records[0]->SEMCODE ?? '';?></b></h4>
               <table id="example1" class="table table-bordered table-striped">
               <thead>
                     <tr>
@@ -25,7 +25,7 @@
                       <th>Current(Room-seat/Hostel)</th>
                       <th>Applied For(Room-seat/Hostel)</th>
                       <th>Date/Time</th>
-                      <th>Status</th>
+                      <!-- <th>Status</th> -->
                      <!-- <th>Action</th>-->
                     </tr>
               </thead>
@@ -43,7 +43,7 @@
                       <td style="text-align:center"><?php echo $record->CROOM.'-'.$record->CSEAT.'/'.$record->CHOSTEL ?></td>
       				  <td style="text-align:center"><?php echo $record->ROOM1.'-'.$record->SEAT1.'/'.$record->HOSTEL1 ?></td>
                       <td><?php echo $record->CREATEDDTM ?></td>
-                      <td><?php echo '' ?></td>
+                      <!-- <td><?php echo '' ?></td> -->
                       <!--<td>
                           <a href="<?php //echo base_url().'report/reports/studentallot/'.$record->ALLOTMENT_ID; ?>"><i class="fa fa-file"></i>&nbsp;&nbsp;&nbsp;</a>
                           

@@ -464,12 +464,8 @@ class NewFeechallan extends BaseController
 		$strucnationality = $feestructureinfo->nationality;
 		
 		$strucprogram = $feestructureinfo->program;
-
-
 		
-		$csemchallan_status = $this->feechallan_model->CheckFeestatusRegnowise($studpostregno, $gender, $csem, $feestructureid);
-
-
+		$csemchallan_status = $this->feechallan_model->CheckFeestatusRegnowise($studpostregno, $gender, $csem, $feestructureid);		
 				
 		if($strucFeetype == 'ReAllotment')
 		{
@@ -513,11 +509,11 @@ class NewFeechallan extends BaseController
 					
 					$studentaljamia = $this->feechallan_model->GetstudinfoAljamia($regno);
 					
-					$studregno = $studentaljamia->REGNO;
-					
-					$studnationality = $studentaljamia->NATIONALITY;
-					
-					$studprogram = $studentaljamia->PROTITTLE;
+					$studregno = $studentaljamia->REGNO ?? $studentaljamia[0]->REGNO;
+										
+					$studnationality = $studentaljamia->NATIONALITY ?? $studentaljamia[0]->NATIONALITY;
+										
+					$studprogram = $studentaljamia->PROTITTLE ?? $studentaljamia[0]->PROTITTLE;
 								
 					if($studprogram == 'BS' || $studprogram == 'LLB' || $studprogram == 'MA' || $studprogram == 'MSC' || $studprogram == 'BA'){
 						$studprogram = 'BS';	
@@ -624,7 +620,7 @@ class NewFeechallan extends BaseController
 		}
 		elseif($strucFeetype == 'Allotment')
 		{
-
+			   
 			if($studpostregno == ''){
 
 				$this->session->set_flashdata('error', 'Enter Valid Regno');
@@ -633,22 +629,13 @@ class NewFeechallan extends BaseController
 			}
 			else
 			{
-				// var_dump($gender);
-				// var_dump($studpostregno);
-
-				//  exit();
 					   
 				$currentsemcode = $this->feechallan_model->CurrentSemester($gender);
 							
 				$currentsemcode = $currentsemcode->semcode;
 							
 				$regnoinfos = $this->feechallan_model->GetStudAllotmentregnoInfo($studpostregno, $gender);
-
-
-				
-
-
-				
+							
 				if(!empty($regnoinfos))
 				{
 					$count = 0;
@@ -659,15 +646,12 @@ class NewFeechallan extends BaseController
 						$regno = $regnoinfo->regno;
 
 						$csemchallan_status = $this->feechallan_model->CheckFeestatusRegno($regno, $gender, $csem, $feestructureid);	
-
 						
 						if(empty($csemchallan_status))
 						{
 								
 							$challanno = $this->feechallan_model->NewGetLastChallanno();
-
-
-
+							
 							if(empty($challanno))
 							{
 								$lastchallanno = (int)'200000042842';
@@ -678,19 +662,13 @@ class NewFeechallan extends BaseController
 							}	
 												
 							$studentaljamia = $this->feechallan_model->GetstudinfoAljamia($regno);
-
-
-
-
 								
 							$studregno = $studentaljamia->REGNO ?? $studentaljamia[0]->REGNO;
 										
 							$studnationality = $studentaljamia->NATIONALITY ?? $studentaljamia[0]->NATIONALITY;
 										
 							$studprogram = $studentaljamia->PROTITTLE ?? $studentaljamia[0]->PROTITTLE;
-
-							
-									
+												
 							if($studprogram == 'BSC' || $studprogram == 'BS' || $studprogram == 'LLB' || $studprogram == 'MA' || $studprogram == 'MSC' || $studprogram == 'BA')
 							{
 								$studprogram = 'BS';
@@ -713,12 +691,7 @@ class NewFeechallan extends BaseController
 								$studnationality = 'Foreigner';
 							}
 												
-							// 	var_dump($studregno);
-							// var_dump($studprogram);
-							// var_dump($strucprogram);
-
-							
-							//  exit();				
+												
 							if(!empty($studregno) && ($studprogram == $strucprogram) && ($studnationality == $strucnationality) )
 							{
 																																 
@@ -739,13 +712,7 @@ class NewFeechallan extends BaseController
 									'created_by'=>$userId, 
 									'created_at'=>date('Y-m-d H:m:i')
 								);
-
-								
-
-
-								$lastpayid = $this->feechallan_model->InsertNewFeeChallan($SaveRenewalFeeChallan);
-
-									
+								$lastpayid = $this->feechallan_model->InsertNewFeeChallan($SaveRenewalFeeChallan);	
 										
 								$count++;
 							}												
@@ -4405,8 +4372,6 @@ $result = $this->feechallan_model->GetUniqueFeecode($programechallan, $gender, $
 	
 	 function printAllotmentFeeChallanByRegno($feestatus)
      {
-
-
       	if($feestatus == 'NEWHOSTELFEE'){
 			
 		$feetype = 'HOSTEL FEE';
@@ -4416,28 +4381,20 @@ $result = $this->feechallan_model->GetUniqueFeecode($programechallan, $gender, $
 		$studregno = $this->session->userdata('studregno');
 		
 		$genders = $this->feechallan_model->GetGenderByRegno($studregno);
-
-
 		
-
-		if($genders->GENDER == 'Male' || $genders->GENDER == 'M'){
+		if($genders->GENDER == 'M' || $genders->GENDER == 'Male'){
 			$gender = 'Male';
 		}
-		elseif($genders->GENDER == 'Female' || $genders->GENDER == 'F'){
+		elseif($genders->GENDER == 'F' || $genders->GENDER == 'Female'){
 			$gender = 'Female';
 		}	
 		
 		
-
-
 		$seminfo = $this->report_model->GetActiveSem($gender);
 			
 	    $semcode = $seminfo[0]->SEMCODE;
 		
 		$AllotmentChallanexist = $this->feechallan_model->printAllotmentFeeChallanByRegno($studregno, $feetype, $semcode);
-
-
-		
 		
 		if(empty($AllotmentChallanexist)){
 			
@@ -4452,13 +4409,11 @@ $result = $this->feechallan_model->GetUniqueFeecode($programechallan, $gender, $
 			else{
 				
 				  $data['FeeInfo'] = $this->feechallan_model->printAllotmentFeeChallanByRegno($studregno, $feetype, $semcode);
-
 				
 				  $data['BankInfo'] = $this->feechallan_model->ViewBankInfo($gender);
-
-				
 				
 				  $this->load->view("feechallan/newfee/printFeeChallanByRegno", $data);
+				
 			}
 		
 		}
@@ -4472,10 +4427,10 @@ $result = $this->feechallan_model->GetUniqueFeecode($programechallan, $gender, $
 		
 		$genders = $this->feechallan_model->GetGenderByRegno($studregno);
 		
-		if($genders->GENDER == 'M'){
+		if($genders->GENDER == 'Male' || $genders->GENDER == 'M'){
 			$gender = 'Male';
 		}
-		elseif($genders->GENDER == 'F'){
+		elseif($genders->GENDER == 'Female' || $genders->GENDER == 'F'){
 			$gender = 'Female';
 		}
 		

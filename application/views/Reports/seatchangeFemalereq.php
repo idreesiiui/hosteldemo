@@ -15,7 +15,7 @@
                     
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                <h4 style="margin-left:25%; margin-right:15%; text-decoration:underline"><?php echo 'Seat Change Application for Semester '.'<b>'.$records[0]->SEMCODE.'</b>';?></h4>
+                <h4 style="margin-left:25%; margin-right:15%; text-decoration:underline">Seat Change Application for Semester <b><?php echo $records[0]->SEMCODE ?? '';?></b></h4>
                 <div id="feedback" style="float: left; width: 225px; display: none;" class="alert alert-success alert-dismissible">Rcords Save Successfully</div>
               <table id="example1" class="table table-bordered table-striped">
               <thead>
